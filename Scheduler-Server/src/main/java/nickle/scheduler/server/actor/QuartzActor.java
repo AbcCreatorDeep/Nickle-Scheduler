@@ -13,7 +13,7 @@ import java.util.Date;
 /**
  * @author huangjun01
  * @title: QuartzActor
- * @description:
+ * @description: 为原生quartz的actor，接收executor提交的任务并执行
  * @date 2019/5/6 16:14
  */
 public class QuartzActor extends AbstractActor implements SchedulerLifecyle {

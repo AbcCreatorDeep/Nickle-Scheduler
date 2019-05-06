@@ -1,7 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="eedc54f2-8fa6-4ebd-a43b-b8fa4843afd3" name="Default Changelist" comment="" />
+    <list default="true" id="eedc54f2-8fa6-4ebd-a43b-b8fa4843afd3" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/Scheduler-Client/lib/tables_mysql.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Scheduler-Client/src/main/java/nickle/scheduler/client/actor/ExecutorActor.java" beforeDir="false" afterPath="$PROJECT_DIR$/Scheduler-Client/src/main/java/nickle/scheduler/client/actor/ExecutorActor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Scheduler-Client/src/main/resources/application.conf" beforeDir="false" afterPath="$PROJECT_DIR$/Scheduler-Client/src/main/resources/application.conf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Scheduler-Server/src/main/java/nickle/scheduler/server/actor/QuartzActor.java" beforeDir="false" afterPath="$PROJECT_DIR$/Scheduler-Server/src/main/java/nickle/scheduler/server/actor/QuartzActor.java" afterDir="false" />
+    </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/target/" />
     <ignored path="$PROJECT_DIR$/Scheduler-Client/target/" />
@@ -35,11 +40,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Scheduler-Client/src/main/resources/application.conf">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="432">
-              <caret line="16" column="1" lean-forward="true" selection-start-line="16" selection-start-column="1" selection-end-line="16" selection-end-column="1" />
+            <state relative-caret-position="378">
+              <caret line="14" column="14" selection-start-line="14" selection-start-column="14" selection-end-line="14" selection-end-column="14" />
             </state>
           </provider>
         </entry>
@@ -47,8 +52,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Scheduler-Client/src/main/java/nickle/scheduler/client/actor/ExecutorActor.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="378">
-              <caret line="22" column="50" selection-start-line="22" selection-start-column="50" selection-end-line="22" selection-end-column="50" />
+            <state relative-caret-position="189">
+              <caret line="12" column="3" lean-forward="true" selection-start-line="12" selection-start-column="3" selection-end-line="12" selection-end-column="3" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -71,11 +76,65 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Scheduler-Server/src/main/java/nickle/scheduler/server/actor/QuartzActor.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="459">
-              <caret line="27" column="100" selection-start-line="27" selection-start-column="100" selection-end-line="27" selection-end-column="100" />
+            <state relative-caret-position="648">
+              <caret line="47" column="30" selection-start-line="47" selection-start-column="30" selection-end-line="47" selection-end-column="30" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="jar://$MAVEN_REPOSITORY$/org/quartz-scheduler/quartz/2.2.2/quartz-2.2.2-sources.jar!/org/quartz/impl/StdScheduler.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="352">
+              <caret line="248" column="32" selection-start-line="248" selection-start-column="21" selection-end-line="248" selection-end-column="32" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="jar://$MAVEN_REPOSITORY$/org/quartz-scheduler/quartz/2.2.2/quartz-2.2.2-sources.jar!/org/quartz/core/QuartzScheduler.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="460">
+              <caret line="885" column="24" lean-forward="true" selection-start-line="885" selection-start-column="18" selection-end-line="885" selection-end-column="29" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="jar://$MAVEN_REPOSITORY$/org/quartz-scheduler/quartz/2.2.2/quartz-2.2.2-sources.jar!/org/quartz/core/QuartzSchedulerResources.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="290">
+              <caret line="71" column="20" selection-start-line="71" selection-start-column="12" selection-end-line="71" selection-end-column="20" />
+              <folding>
+                <element signature="e#9621#9622#0" expanded="true" />
+                <element signature="e#9652#9653#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="jar://$MAVEN_REPOSITORY$/org/quartz-scheduler/quartz/2.2.2/quartz-2.2.2-sources.jar!/org/quartz/impl/jdbcjobstore/JobStoreTX.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="298">
+              <caret line="42" column="13" selection-start-line="42" selection-start-column="13" selection-end-line="42" selection-end-column="13" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/Scheduler-Client/lib/tables_mysql.sql">
+          <provider selected="true" editor-type-id="text-editor" />
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="jar://$MAVEN_REPOSITORY$/org/quartz-scheduler/quartz/2.2.2/quartz-2.2.2-sources.jar!/org/quartz/Scheduler.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="298">
+              <caret line="417" column="9" selection-start-line="417" selection-start-column="9" selection-end-line="417" selection-end-column="9" />
             </state>
           </provider>
         </entry>
@@ -176,7 +235,7 @@
       <select />
     </treeState>
   </component>
-  <component name="ProjectFrameBounds" extendedState="7">
+  <component name="ProjectFrameBounds" extendedState="6">
     <option name="x" value="-1" />
     <option name="y" value="11" />
     <option name="width" value="1699" />
@@ -201,6 +260,12 @@
               <item name="Nickle-Scheduler" type="b2602c69:ProjectViewProjectNode" />
               <item name="Nickle-Scheduler" type="462c0819:PsiDirectoryNode" />
               <item name="Scheduler-Client" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Nickle-Scheduler" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Nickle-Scheduler" type="462c0819:PsiDirectoryNode" />
+              <item name="Scheduler-Client" type="462c0819:PsiDirectoryNode" />
+              <item name="lib" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="Nickle-Scheduler" type="b2602c69:ProjectViewProjectNode" />
@@ -403,7 +468,7 @@
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
     <property name="jdk.selected.JAVA_MODULE" value="1.8" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/Scheduler-Server/src/main/java/nickle/scheduler/server/mapper" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/Scheduler-Client/lib" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
     <property name="project.structure.last.edited" value="Modules" />
@@ -417,6 +482,7 @@
       <recent name="nickle.scheduler.actor" />
     </key>
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\huangjun01\Desktop\xxl-job-2.0.2\Nickle-Scheduler\Scheduler-Client\lib" />
       <recent name="C:\Users\huangjun01\Desktop\xxl-job-2.0.2\Nickle-Scheduler\Scheduler-Server\src\main\java\nickle\scheduler\server\mapper" />
     </key>
   </component>
@@ -477,7 +543,7 @@
       <workItem from="1557123051778" duration="550000" />
       <workItem from="1557123609858" duration="1885000" />
       <workItem from="1557125512326" duration="12604000" />
-      <workItem from="1557138562725" duration="539000" />
+      <workItem from="1557138562725" duration="1002000" />
     </task>
     <servers />
   </component>
@@ -514,12 +580,12 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="15578000" />
+    <option name="totallyTimeSpent" value="16041000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1936" height="1056" extended-state="7" />
+    <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.22547974" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.22547974" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Image Layers" order="2" />
       <window_info id="Designer" order="3" />
@@ -536,7 +602,7 @@
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
       <window_info anchor="bottom" id="Version Control" order="8" />
       <window_info anchor="bottom" id="Database Changes" order="9" />
-      <window_info active="true" anchor="bottom" id="Terminal" order="10" visible="true" weight="0.329718" />
+      <window_info anchor="bottom" id="Terminal" order="10" weight="0.329718" />
       <window_info anchor="bottom" id="Event Log" order="11" side_tool="true" />
       <window_info anchor="bottom" id="Messages" order="12" weight="0.32936078" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
@@ -661,13 +727,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="299">
           <caret line="143" column="11" selection-start-line="143" selection-start-column="11" selection-end-line="143" selection-end-column="11" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$MAVEN_REPOSITORY$/org/quartz-scheduler/quartz/2.2.2/quartz-2.2.2-sources.jar!/org/quartz/Scheduler.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="561">
-          <caret line="314" lean-forward="true" selection-start-line="314" selection-end-line="314" />
         </state>
       </provider>
     </entry>
@@ -847,18 +906,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Scheduler-Client/src/main/resources/application.conf">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="432">
-          <caret line="16" column="1" lean-forward="true" selection-start-line="16" selection-start-column="1" selection-end-line="16" selection-end-column="1" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Scheduler-Client/src/main/java/nickle/scheduler/client/actor/ExecutorActor.java">
-      <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="378">
-          <caret line="22" column="50" selection-start-line="22" selection-start-column="50" selection-end-line="22" selection-end-column="50" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
+          <caret line="14" column="14" selection-start-line="14" selection-start-column="14" selection-end-line="14" selection-end-column="14" />
         </state>
       </provider>
     </entry>
@@ -872,15 +921,67 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Scheduler-Server/src/main/java/nickle/scheduler/server/actor/QuartzActor.java">
+    <entry file="file://$PROJECT_DIR$/Scheduler-Client/src/main/java/nickle/scheduler/client/actor/ExecutorActor.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="459">
-          <caret line="27" column="100" selection-start-line="27" selection-start-column="100" selection-end-line="27" selection-end-column="100" />
+        <state relative-caret-position="189">
+          <caret line="12" column="3" lean-forward="true" selection-start-line="12" selection-start-column="3" selection-end-line="12" selection-end-column="3" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
+    </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/org/quartz-scheduler/quartz/2.2.2/quartz-2.2.2-sources.jar!/org/quartz/Scheduler.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="298">
+          <caret line="417" column="9" selection-start-line="417" selection-start-column="9" selection-end-line="417" selection-end-column="9" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Scheduler-Server/src/main/java/nickle/scheduler/server/actor/QuartzActor.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="648">
+          <caret line="47" column="30" selection-start-line="47" selection-start-column="30" selection-end-line="47" selection-end-column="30" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/org/quartz-scheduler/quartz/2.2.2/quartz-2.2.2-sources.jar!/org/quartz/impl/StdScheduler.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="352">
+          <caret line="248" column="32" selection-start-line="248" selection-start-column="21" selection-end-line="248" selection-end-column="32" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/org/quartz-scheduler/quartz/2.2.2/quartz-2.2.2-sources.jar!/org/quartz/core/QuartzScheduler.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="460">
+          <caret line="885" column="24" lean-forward="true" selection-start-line="885" selection-start-column="18" selection-end-line="885" selection-end-column="29" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/org/quartz-scheduler/quartz/2.2.2/quartz-2.2.2-sources.jar!/org/quartz/core/QuartzSchedulerResources.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="290">
+          <caret line="71" column="20" selection-start-line="71" selection-start-column="12" selection-end-line="71" selection-end-column="20" />
+          <folding>
+            <element signature="e#9621#9622#0" expanded="true" />
+            <element signature="e#9652#9653#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/org/quartz-scheduler/quartz/2.2.2/quartz-2.2.2-sources.jar!/org/quartz/impl/jdbcjobstore/JobStoreTX.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="298">
+          <caret line="42" column="13" selection-start-line="42" selection-start-column="13" selection-end-line="42" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Scheduler-Client/lib/tables_mysql.sql">
+      <provider selected="true" editor-type-id="text-editor" />
     </entry>
   </component>
   <component name="masterDetails">

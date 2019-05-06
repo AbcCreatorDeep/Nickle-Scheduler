@@ -9,7 +9,7 @@ import nickle.scheduler.common.ExecutorStartEvent;
 import nickle.scheduler.common.NickleSchedulerExeception;
 
 /**
- * 执行器注册actor
+ * 执行器actor，接受任务调度的消息并启动任务
  */
 public class ExecutorActor extends AbstractActor {
     public static Props props() {
