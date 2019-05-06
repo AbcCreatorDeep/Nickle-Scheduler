@@ -1,0 +1,12 @@
+org.quartz.scheduler.instanceName = Nickle-Scheduler
+org.quartz.threadPool.threadCount = 3
+org.quartz.jobStore.class = org.quartz.impl.jdbcjobstore.JobStoreTX
+org.quartz.jobStore.driverDelegateClass = org.quartz.impl.jdbcjobstore.StdJDBCDelegate
+org.quartz.jobStore.tablePrefix = QRTZ_
+org.quartz.jobStore.dataSource = SchedulerDS
+
+org.quartz.dataSource.myDS.driver = com.mysql.jdbc.Driver
+org.quartz.dataSource.myDS.URL = jdbc:mysql://10.155.10.38:4502/quartz?characterEncoding=utf-8
+org.quartz.dataSource.myDS.user = shark_dev
+org.quartz.dataSource.myDS.password = shark_dev
+org.quartz.dataSource.myDS.maxConnections = 5
