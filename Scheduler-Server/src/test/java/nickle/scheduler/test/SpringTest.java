@@ -8,7 +8,8 @@ import akka.actor.ActorRef;
 import akka.actor.ActorSystem;
 import nickle.scheduler.server.Application;
 import nickle.scheduler.server.actor.SchedulerActor;
-import nickle.scheduler.server.service.INickleSchedulerExecutorService;
+
+import org.apache.ibatis.session.SqlSessionFactory;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,16 +30,12 @@ public class SpringTest {
     @Autowired
     private ActorSystem actorSystem;
     @Autowired
-    private INickleSchedulerExecutorService iNickleSchedulerExecutorService;
-
-    @Test
-    public void testService() {
-        System.out.println(iNickleSchedulerExecutorService.count());
-    }
+    private SqlSessionFactory sqlSessionFactory;
 
     @Test
     public void testActorSystem() throws InterruptedException {
-        ActorRef actorRef = actorSystem.actorOf(SchedulerActor.props());
+        ActorRef actorRef = actorSystem.actorOf(SchedulerActor.props(sqlSessionFactory));
+        actorRef.tell("", actorRef);
         try {
             System.in.read();
         } catch (IOException e) {

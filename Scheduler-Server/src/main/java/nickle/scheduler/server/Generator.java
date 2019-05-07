@@ -26,6 +26,8 @@ public class Generator {
 
         // 全局配置
         GlobalConfig gc = new GlobalConfig();
+        gc.setBaseResultMap(true);
+        gc.setBaseColumnList(true);
         String projectPath = System.getProperty("user.dir")+"/Scheduler-Server";
         gc.setOutputDir(projectPath + "/src/main/java");
         gc.setAuthor("nickle");
