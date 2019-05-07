@@ -11,7 +11,7 @@ import org.springframework.context.annotation.Configuration;
  */
 @Configuration
 public class AkkaConfig {
-    @Bean
+    @Bean(destroyMethod = "terminate")
     public ActorSystem actorSystem() {
         return ActorSystem.create("nickle-scheduler-server-as");
     }

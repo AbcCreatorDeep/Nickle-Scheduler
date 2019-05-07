@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="nickle.scheduler.server.mapper.NickleSchedulerLockMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="nickle.scheduler.server.entity.NickleSchedulerLock">
+        <id column="lock_id" property="lockId"/>
+        <result column="lock_name" property="lockName"/>
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        lock_id, lock_name
+    </sql>
+    <select id="lock" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from nickle_scheduler_lock where lock_name = #{lockName} for update
+    </select>
+</mapper>

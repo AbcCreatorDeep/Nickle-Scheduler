@@ -55,13 +55,13 @@ public class SchedulerActor extends AbstractActor {
             QueryWrapper<NickleSchedulerTrigger> queryWrapper = new QueryWrapper<>();
             queryWrapper.lambda().le(NickleSchedulerTrigger::getTriggerNextTime, System.currentTimeMillis());
             List<NickleSchedulerTrigger> nickleSchedulerTriggers = schedulerTriggerMapper.selectList(queryWrapper);
+            log.info("需要调度的触发器：{}", nickleSchedulerTriggers);
             //添加任务
             addRunJob(sqlSession, nickleSchedulerTriggers, schedulerTriggerMapper);
-            System.out.println(nickleSchedulerTriggers);
             sqlSession.commit();
         } catch (Exception e) {
             sqlSession.rollback();
-            e.printStackTrace();
+            log.error("调度发生错误:{}", e.getMessage());
         } finally {
             sqlSession.close();
         }
@@ -83,6 +83,7 @@ public class SchedulerActor extends AbstractActor {
             QueryWrapper<NickleSchedulerJob> queryWrapper = new QueryWrapper<>();
             queryWrapper.lambda().eq(NickleSchedulerJob::getJobTriggerName, trigger.getTriggerName());
             List<NickleSchedulerJob> nickleSchedulerRunJobs = jobMapper.selectList(queryWrapper);
+            log.info("需要调度的job：{}", nickleSchedulerRunJobs);
             for (NickleSchedulerJob job : nickleSchedulerRunJobs) {
                 //获取到job对应执行器，选取发送
                 QueryWrapper<NickleSchedulerExecutorJob> executorJobQueryWrapper = new QueryWrapper<>();
@@ -99,9 +100,13 @@ public class SchedulerActor extends AbstractActor {
                     NickleSchedulerExecutor nickleSchedulerExecutor = executorMapper.selectOne(schedulerExecutorQueryWrapper);
                     //拼接获取远程actor发送信息
                     ActorSelection actorSelection = getContext().actorSelection(String.format(AKKA_REMOTE_MODEL
-                            , EXECUTOR_SYSTEM_NAME, EXECUTOR_DISPATCHER_NAME));
+                            , nickleSchedulerExecutor.getExecutorIp()
+                            , nickleSchedulerExecutor.getExecutorPort()
+                            , EXECUTOR_SYSTEM_NAME
+                            , EXECUTOR_DISPATCHER_NAME));
                     ExecuteJobEvent executorStartEvent = new ExecuteJobEvent();
                     executorStartEvent.setClassName(job.getJobClassName());
+                    log.info("开始调度job：{}", job);
                     actorSelection.tell(executorStartEvent, getSelf());
                     //插入运行队列
                     NickleSchedulerRunJob nickleSchedulerRunJob = new NickleSchedulerRunJob();
@@ -119,7 +124,7 @@ public class SchedulerActor extends AbstractActor {
             CronExpression cronExpression = new CronExpression(triggerCron);
             long time = cronExpression.getTimeAfter(new Date()).getTime();
             trigger.setTriggerNextTime(time);
-            schedulerTriggerMapper.insert(trigger);
+            schedulerTriggerMapper.updateById(trigger);
         }
 
     }

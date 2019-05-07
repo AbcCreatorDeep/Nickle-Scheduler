@@ -5,6 +5,9 @@ spring:
     url: jdbc:mysql://10.155.10.38:4502/nickle-scheduler?Unicode=true&characterEncoding=UTF-8
     username: shark_dev
     password: shark_dev
+mybatis-plus:
+  mapper-locations: classpath:mapper/*.xml
+# 自定义配置
 nickle:
   scheduler:
     schedule-time: 10*1000
