@@ -1,0 +1,10 @@
+# DataSource Config
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://10.155.10.38:4502/nickle-scheduler?Unicode=true&characterEncoding=UTF-8
+    username: shark_dev
+    password: shark_dev
+nickle:
+  scheduler:
+    schedule-time: 10*1000

@@ -1,55 +1,34 @@
 package nickle.scheduler.server.entity;
 
-import java.util.Date;
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.experimental.Accessors;
 
-public class NickleSchedulerExecutor {
-    private Integer id;
+import java.io.Serializable;
 
-    private String jobName;
+/**
+ * <p>
+ *
+ * </p>
+ *
+ * @author nickle
+ * @since 2019-05-07
+ */
+@Data
+@EqualsAndHashCode(callSuper = false)
+@Accessors(chain = true)
+public class NickleSchedulerExecutor implements Serializable {
 
-    private String ip;
+    private static final long serialVersionUID = 1L;
 
-    private Integer port;
+    @TableId(value = "executor_id", type = IdType.AUTO)
+    private Integer executorId;
 
-    private Date createTime;
+    private String executorIp;
 
-    public Integer getId() {
-        return id;
-    }
+    private Integer executorPort;
 
-    public void setId(Integer id) {
-        this.id = id;
-    }
 
-    public String getJobName() {
-        return jobName;
-    }
-
-    public void setJobName(String jobName) {
-        this.jobName = jobName == null ? null : jobName.trim();
-    }
-
-    public String getIp() {
-        return ip;
-    }
-
-    public void setIp(String ip) {
-        this.ip = ip == null ? null : ip.trim();
-    }
-
-    public Integer getPort() {
-        return port;
-    }
-
-    public void setPort(Integer port) {
-        this.port = port;
-    }
-
-    public Date getCreateTime() {
-        return createTime;
-    }
-
-    public void setCreateTime(Date createTime) {
-        this.createTime = createTime;
-    }
 }
