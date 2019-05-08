@@ -1,14 +1,28 @@
 package nickle.scheduler.test;
 
-import akka.actor.Actor;
+import akka.actor.AbstractActor;
 import akka.actor.ActorRef;
 import akka.actor.ActorSystem;
+import akka.actor.Props;
+import akka.dispatch.OnComplete;
+import akka.pattern.Patterns;
 import akka.testkit.javadsl.TestKit;
-import nickle.scheduler.client.actor.ExecutorActor;
-import nickle.scheduler.common.ExecutorStartEvent;
+import akka.util.Timeout;
+import com.google.common.collect.Lists;
+import nickle.scheduler.client.actor.DispatcherActor;
+import nickle.scheduler.common.event.RegisterEvent;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import scala.concurrent.Future;
+import scala.concurrent.duration.Duration;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.concurrent.TimeUnit;
+
+import static nickle.scheduler.common.Constant.EXECUTOR_DISPATCHER_NAME;
+import static nickle.scheduler.common.Constant.EXECUTOR_SYSTEM_NAME;
 
 /**
  * @author huangjun01
@@ -18,10 +32,36 @@ import org.junit.Test;
  */
 public class ExecutorTest {
     static ActorSystem system;
+    private Object lock = new Object();
+
+    static class ServerActor extends AbstractActor {
+        public static Props props() {
+            return Props.create(ServerActor.class);
+        }
+
+        @Override
+        public Receive createReceive() {
+            return receiveBuilder().matchAny((msg) -> {
+                Thread.sleep(2000);
+                getSender().tell("ok", getSelf());
+            }).build();
+        }
+    }
+
+    static class ClientActor extends AbstractActor {
+        public static Props props() {
+            return Props.create(ClientActor.class);
+        }
+
+        @Override
+        public Receive createReceive() {
+            return receiveBuilder().build();
+        }
+    }
 
     @BeforeClass
     public static void setup() {
-        system = ActorSystem.create();
+        system = ActorSystem.create(EXECUTOR_SYSTEM_NAME);
     }
 
     @AfterClass
@@ -32,40 +72,47 @@ public class ExecutorTest {
 
     @Test
     public void testExecutor() {
-        new TestKit(system) {
-            {
-                ActorRef test_executor = system.actorOf(ExecutorActor.props(), "test-executor");
-                // can also use JavaTestKit “from the outside”
-                final TestKit probe = new TestKit(system);
-                ExecutorStartEvent executorStartEvent = new ExecutorStartEvent();
-                executorStartEvent.setClassName("nickle.scheduler.test.DemoJob");
-                executorStartEvent.setSpliceNum(10);
-                test_executor.tell(executorStartEvent, Actor.noSender());
-                // await the correct response
-                //expectMsg(Duration.ofSeconds(1), "done");
+        ActorRef server = system.actorOf(ServerActor.props());
+        Timeout t = new Timeout(Duration.create(3, TimeUnit.SECONDS));
+        //使用ask发送消息,actor处理完，必须有返回（超时时间5秒）
+        try {
+            Future<Object> ask = Patterns.ask(server, "123", t);
+            ask.onComplete(new OnComplete<Object>() {
+                @Override
+                public void onComplete(Throwable throwable, Object o) throws Throwable {
+                    if (throwable != null) {
+                        System.out.println("some thing wrong.{}" + throwable);
+                    } else {
+                        System.out.println("success:" + o);
+                    }
+                }
+            }, system.dispatcher());
+            System.out.println("执行完毕");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
-                // the run() method needs to finish within 3 seconds
-//                within(
-//                        Duration.ofSeconds(3),
-//                        () -> {
-//                            subject.tell("hello", getRef());
-//
-//                            // This is a demo: would normally use expectMsgEquals().
-//                            // Wait time is bounded by 3-second deadline above.
-//                            awaitCond(probe::msgAvailable);
-//
-//                            // response must have been enqueued to us before probe
-//                            expectMsg(Duration.ZERO, "world");
-//                            // check that the probe we injected earlier got the msg
-//                            probe.expectMsg(Duration.ZERO, "hello");
-//                            Assert.assertEquals(getRef(), probe.getLastSender());
-//
-//                            // Will wait for the rest of the 3 seconds
-//                            expectNoMessage();
-//                            return null;
-//                        });
-            }
-        };
-
+    @Test
+    public void testRegister() throws IOException {
+        ActorRef actorRef = system.actorOf(DispatcherActor.props(), EXECUTOR_DISPATCHER_NAME);
+        DispatcherActor.JobDetail jobDetail = new DispatcherActor.JobDetail();
+        ArrayList<RegisterEvent.JobData> jobDataArrayList = Lists.newArrayList();
+        ArrayList<RegisterEvent.TriggerData> triggerDataArrayList = Lists.newArrayList();
+        RegisterEvent.JobData jobData = new RegisterEvent.JobData();
+        jobData.setJobAuthor("nickle");
+        jobData.setJobClassName("nickle.scheduler.test.DemoJob");
+        jobData.setJobDescription("测试job");
+        jobData.setJobName("testJob");
+        jobData.setJobTriggerName("testTrigger");
+        RegisterEvent.TriggerData triggerData = new RegisterEvent.TriggerData();
+        triggerData.setTriggerCron("10 * * * * ?");
+        triggerData.setTriggerName("testTrigger");
+        jobDataArrayList.add(jobData);
+        triggerDataArrayList.add(triggerData);
+        jobDetail.setJobDataList(jobDataArrayList);
+        jobDetail.setTriggerDataList(triggerDataArrayList);
+        actorRef.tell(jobDetail, actorRef);
+        System.in.read();
     }
 }

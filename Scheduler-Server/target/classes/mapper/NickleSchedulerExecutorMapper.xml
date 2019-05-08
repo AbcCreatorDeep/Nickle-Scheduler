@@ -13,4 +13,7 @@
     <sql id="Base_Column_List">
         executor_id, executor_ip, executor_port
     </sql>
+    <update id="updateByIpAndPort" parameterType="map">
+        update nickle_scheduler_executor set update_time = #{time} where executor_ip = #{ip} and executor_port = #{port}
+    </update>
 </mapper>

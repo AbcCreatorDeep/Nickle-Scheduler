@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="nickle.scheduler.server.mapper.NickleSchedulerFailJobMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="nickle.scheduler.server.entity.NickleSchedulerFailJob">
+        <id column="id" property="id" />
+        <result column="job_id" property="jobId" />
+        <result column="job_name" property="jobName" />
+        <result column="trigger_name" property="triggerName" />
+        <result column="executor_id" property="executorId" />
+        <result column="failed_time" property="failedTime" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, job_id, job_name, trigger_name, executor_id, failed_time
+    </sql>
+
+</mapper>

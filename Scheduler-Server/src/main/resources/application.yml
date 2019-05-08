@@ -11,3 +11,6 @@ mybatis-plus:
 nickle:
   scheduler:
     schedule-time: 10*1000
+logging:
+  level:
+    nickle.scheduler.server.mapper: INFO

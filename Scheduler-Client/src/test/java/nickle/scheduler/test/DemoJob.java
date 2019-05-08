@@ -12,6 +12,6 @@ import nickle.scheduler.client.core.SchedulerJob;
 public class DemoJob implements SchedulerJob {
     @Override
     public void execute(SchedulerContext schedulerContext) throws Exception {
-        System.out.println("receive msg,分片数" + schedulerContext.getSpliceNum());
+        System.out.println("任务执行");
     }
 }

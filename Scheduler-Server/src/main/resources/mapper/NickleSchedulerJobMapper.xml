@@ -4,17 +4,16 @@
 
     <!-- 通用查询映射结果 -->
     <resultMap id="BaseResultMap" type="nickle.scheduler.server.entity.NickleSchedulerJob">
-        <id column="id" property="id" />
-        <result column="job_name" property="jobName" />
-        <result column="job_class_name" property="jobClassName" />
-        <result column="job_author" property="jobAuthor" />
-        <result column="job_trigger_name" property="jobTriggerName" />
-        <result column="job_description" property="jobDescription" />
+        <id column="id" property="id"/>
+        <result column="job_name" property="jobName"/>
+        <result column="job_class_name" property="jobClassName"/>
+        <result column="job_author" property="jobAuthor"/>
+        <result column="job_trigger_name" property="jobTriggerName"/>
+        <result column="job_description" property="jobDescription"/>
     </resultMap>
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
         id, job_name, job_class_name, job_author, job_trigger_name, job_description
     </sql>
-
 </mapper>

@@ -4,7 +4,8 @@
 
     <!-- 通用查询映射结果 -->
     <resultMap id="BaseResultMap" type="nickle.scheduler.server.entity.NickleSchedulerRunJob">
-        <id column="run_job_id" property="runJobId" />
+        <id column="id" property="id" />
+        <result column="job_id" property="jobId" />
         <result column="job_name" property="jobName" />
         <result column="trigger_name" property="triggerName" />
         <result column="executor_id" property="executorId" />
@@ -14,7 +15,7 @@
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        run_job_id, job_name, trigger_name, executor_id, schedule_time, update_time
+        id, job_id, job_name, trigger_name, executor_id, schedule_time, update_time
     </sql>
 
 </mapper>

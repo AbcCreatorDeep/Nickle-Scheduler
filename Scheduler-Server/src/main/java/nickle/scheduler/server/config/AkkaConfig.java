@@ -4,6 +4,8 @@ import akka.actor.ActorSystem;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import static nickle.scheduler.common.Constant.SCHEDULER_SYSTEM_NAME;
+
 /**
  * @author nickle
  * @description:
@@ -13,6 +15,6 @@ import org.springframework.context.annotation.Configuration;
 public class AkkaConfig {
     @Bean(destroyMethod = "terminate")
     public ActorSystem actorSystem() {
-        return ActorSystem.create("nickle-scheduler-server-as");
+        return ActorSystem.create(SCHEDULER_SYSTEM_NAME);
     }
 }

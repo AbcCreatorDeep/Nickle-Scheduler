@@ -13,7 +13,7 @@ import lombok.experimental.Accessors;
  * </p>
  *
  * @author nickle
- * @since 2019-05-07
+ * @since 2019-05-08
  */
 @Data
 @EqualsAndHashCode(callSuper = false)

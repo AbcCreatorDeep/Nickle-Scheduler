@@ -1,7 +1,7 @@
 package nickle.scheduler.server.mapper;
 
-import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import nickle.scheduler.server.entity.NickleSchedulerExecutorJob;
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
 /**
  * <p>
@@ -9,7 +9,8 @@ import nickle.scheduler.server.entity.NickleSchedulerExecutorJob;
  * </p>
  *
  * @author nickle
- * @since 2019-05-07
+ * @since 2019-05-08
  */
 public interface NickleSchedulerExecutorJobMapper extends BaseMapper<NickleSchedulerExecutorJob> {
+
 }

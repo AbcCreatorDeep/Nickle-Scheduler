@@ -14,7 +14,7 @@ import java.io.Serializable;
  * </p>
  *
  * @author nickle
- * @since 2019-05-07
+ * @since 2019-05-08
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
@@ -29,6 +29,8 @@ public class NickleSchedulerExecutor implements Serializable {
     private String executorIp;
 
     private Integer executorPort;
+
+    private Long updateTime;
 
 
 }

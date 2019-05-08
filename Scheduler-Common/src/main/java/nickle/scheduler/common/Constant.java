@@ -9,7 +9,21 @@ package nickle.scheduler.common;
 public class Constant {
     public static final String AKKA_ROUTE_SPLIT = "/";
     public static final String AKKA_REMOTE_MODEL = "akka.tcp://%s@%s:%s/user/%s";
-    public static final String EXECUTOR_SYSTEM_NAME = "executorSystem";
+    /**
+     * 调度器配置
+     */
     public static final String SCHEDULER_SYSTEM_NAME = "schedulerSystem";
+    public static final String SCHEDULER_REGISTER_NAME = "schedulerRegisterActor";
+    public static final String SCHEDULER_CHECKER_NAME = "schedulerCheckerActor";
+    public static final String SCHEDULER_HEART_BEAT_NAME = "schedulerHeartBeatActor";
+    /**
+     * 执行器配置
+     */
     public static final String EXECUTOR_DISPATCHER_NAME = "dispatcherActor";
+    public static final String EXECUTOR_SYSTEM_NAME = "executorSystem";
+    public static final String EXECUTOR_HEART_BEAT_NAME = "executorHeartBeatActor";
+    /**
+     * 注册后用于回复注册成功
+     */
+    public static final String REGISTER_OK = "REGISTER_OK";
 }

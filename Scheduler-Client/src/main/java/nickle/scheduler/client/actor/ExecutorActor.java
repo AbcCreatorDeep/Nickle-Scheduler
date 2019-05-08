@@ -1,16 +1,13 @@
 package nickle.scheduler.client.actor;
 
+
 import akka.actor.AbstractActor;
 import akka.actor.Props;
-import com.typesafe.config.ConfigFactory;
-import nickle.scheduler.client.core.SchedulerContext;
+import lombok.extern.slf4j.Slf4j;
 import nickle.scheduler.client.core.SchedulerJob;
-import nickle.scheduler.common.ExecutorStartEvent;
-import nickle.scheduler.common.NickleSchedulerExeception;
+import nickle.scheduler.common.event.ExecuteJobEvent;
 
-/**
- * 执行器actor，接受任务调度的消息并启动任务
- */
+@Slf4j
 public class ExecutorActor extends AbstractActor {
     public static Props props() {
         return Props.create(ExecutorActor.class);
@@ -18,27 +15,18 @@ public class ExecutorActor extends AbstractActor {
 
     @Override
     public Receive createReceive() {
-        System.out.println(ConfigFactory.defaultApplication().getString("remote.actor.name"));
         return receiveBuilder()
-                .match(ExecutorStartEvent.class, wtg -> {
-                    execExecutorStartEvent(wtg);
+                .match(ExecuteJobEvent.class, executeJobEvent -> {
+                    executeJob(executeJobEvent);
                 }).build();
     }
 
-    private void execExecutorStartEvent(ExecutorStartEvent executorStartEvent) {
-
-        String className = executorStartEvent.getClassName();
-        try {
-            Object o = Class.forName(className).newInstance();
-            if (!(o instanceof SchedulerJob)) {
-                throw new NickleSchedulerExeception("job must implement SchedulerJob interface");
-            }
-            SchedulerJob schedulerJob = (SchedulerJob) o;
-            SchedulerContext schedulerContext = new SchedulerContext();
-            schedulerContext.setSpliceNum(executorStartEvent.getSpliceNum());
-            schedulerJob.execute(schedulerContext);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+    private void executeJob(ExecuteJobEvent executeJobEvent) throws Exception {
+        log.info("执行器收到任务：{}", executeJobEvent);
+        String className = executeJobEvent.getClassName();
+        Class<?> aClass = Class.forName(className);
+        SchedulerJob job = (SchedulerJob) aClass.newInstance();
+        job.execute(null);
     }
+
 }

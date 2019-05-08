@@ -2,6 +2,7 @@ create table nickle_scheduler_executor(
     executor_id int unsigned auto_increment primary key,
     executor_ip varchar(30) not null,
     executor_port int not null,
+    update_time bigint not null,
     key(executor_ip)
 );
 create table nickle_scheduler_executor_job(
@@ -28,13 +29,35 @@ create table nickle_scheduler_trigger(
     key(trigger_name)
 );
 create table nickle_scheduler_run_job(
-    run_job_id int unsigned auto_increment primary key,
+    id int unsigned auto_increment primary key,
+    job_id int unsigned not null,
     job_name varchar(100) not null,
     trigger_name varchar(100) not null,
     executor_id int unsigned not null,
     schedule_time bigint not null,
     update_time bigint not null,
     key(update_time),
+    key(trigger_name,job_name)
+);
+create table nickle_scheduler_fail_job(
+    id int unsigned auto_increment primary key,
+    job_id int unsigned not null,
+    job_name varchar(100) not null,
+    trigger_name varchar(100) not null,
+    executor_id int unsigned not null,
+    failed_time bigint not null,
+    fail_reason tinyint not null,
+    key(failed_time),
+    key(trigger_name,job_name)
+);
+create table nickle_scheduler_success_job(
+    id int unsigned auto_increment primary key,
+    job_id int unsigned not null,
+    job_name varchar(100) not null,
+    trigger_name varchar(100) not null,
+    executor_id int unsigned not null,
+    success_time bigint not null,
+    key(success_time),
     key(trigger_name,job_name)
 );
 create table nickle_scheduler_lock(

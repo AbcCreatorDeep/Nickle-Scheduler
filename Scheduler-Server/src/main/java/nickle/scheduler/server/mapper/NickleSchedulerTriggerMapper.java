@@ -9,7 +9,7 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  * </p>
  *
  * @author nickle
- * @since 2019-05-07
+ * @since 2019-05-08
  */
 public interface NickleSchedulerTriggerMapper extends BaseMapper<NickleSchedulerTrigger> {
 
