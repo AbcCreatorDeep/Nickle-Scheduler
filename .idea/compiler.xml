@@ -6,9 +6,9 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="Scheduler-Client" />
-        <module name="Scheduler-Server" />
         <module name="Scheduler-Common" />
+        <module name="Scheduler-Server" />
+        <module name="Scheduler-Client" />
       </profile>
     </annotationProcessing>
   </component>

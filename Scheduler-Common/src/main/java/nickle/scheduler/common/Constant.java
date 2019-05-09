@@ -7,8 +7,12 @@ package nickle.scheduler.common;
  * @date 2019/5/6 14:43
  */
 public class Constant {
+    /**
+     * akka相关
+     */
     public static final String AKKA_ROUTE_SPLIT = "/";
     public static final String AKKA_REMOTE_MODEL = "akka.tcp://%s@%s:%s/user/%s";
+    public static final String AKKA_LOCAL_PATH_MODEL = "akka://%s/user/%s";
     /**
      * 调度器配置
      */
@@ -26,4 +30,12 @@ public class Constant {
      * 注册后用于回复注册成功
      */
     public static final String REGISTER_OK = "REGISTER_OK";
+    /**
+     * 注册后用于回复注册成功
+     */
+    public static final String REGISTER_FAIL = "REGISTER_FAIL";
+    /**
+     * ip:port 模板
+     */
+    public static final String SOCKET_ADDRESS_MODEL = "%s:%d";
 }

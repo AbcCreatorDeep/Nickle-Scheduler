@@ -83,15 +83,10 @@ public class CheckActor extends AbstractActor {
                 log.info("结束检测无心跳主机,无过期主机");
                 return;
             }
-            executorMapper.deleteBatchIds(schedulerExecutors.stream().map(NickleSchedulerExecutor::getExecutorId).collect(Collectors.toList()));
             log.info("删除过期主机:{}", schedulerExecutors);
+            Utils.deleteExecutor(sqlSession, schedulerExecutors.toArray(new NickleSchedulerExecutor[]{}));
             //删除主机关联的job并重调度该执行器下的job
-            NickleSchedulerExecutorJobMapper executorJobMapper = sqlSession.getMapper(NickleSchedulerExecutorJobMapper.class);
             for (NickleSchedulerExecutor schedulerExecutor : schedulerExecutors) {
-                QueryWrapper<NickleSchedulerExecutorJob> executorJobQueryWrapper = new QueryWrapper<>();
-                executorJobQueryWrapper.lambda().eq(NickleSchedulerExecutorJob::getExecutorId, schedulerExecutor.getExecutorId());
-                executorJobMapper.delete(executorJobQueryWrapper);
-                log.info("解除过期主机与job的关联:{}", schedulerExecutor);
                 //重调度
                 reSchedulerDeathExecutorJob(sqlSession, schedulerExecutor.getExecutorId());
             }

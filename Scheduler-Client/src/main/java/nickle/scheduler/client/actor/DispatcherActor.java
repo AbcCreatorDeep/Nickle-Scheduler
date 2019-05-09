@@ -12,6 +12,7 @@ import com.typesafe.config.Config;
 import com.typesafe.config.ConfigObject;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
+import nickle.scheduler.client.event.ActiveJobEvent;
 import nickle.scheduler.common.event.ExecuteJobEvent;
 import nickle.scheduler.common.event.RegisterEvent;
 import org.apache.commons.lang3.ObjectUtils;
@@ -21,15 +22,21 @@ import scala.concurrent.duration.Duration;
 import java.util.List;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
+import java.util.stream.Collectors;
 
 import static nickle.scheduler.client.actor.HeartBeatActor.HEART_BEAT;
+import static nickle.scheduler.client.constant.Constants.ACTIVE_JOB_EVENT;
 import static nickle.scheduler.common.Constant.*;
 
 /**
  * 执行器分配器actor，接受任务调度的消息并启动任务
+ *
+ * @author nickle
  */
 @Slf4j
 public class DispatcherActor extends AbstractActor {
+    private RegisterEvent registerEvent;
+
     @Data
     public static class JobDetail {
         private List<RegisterEvent.JobData> jobDataList;
@@ -37,7 +44,7 @@ public class DispatcherActor extends AbstractActor {
     }
 
     private List<String> masterList;
-    boolean registerSuccess;
+    private boolean registerSuccess;
     private ActorRef executorRouter;
 
     public static Props props() {
@@ -45,7 +52,7 @@ public class DispatcherActor extends AbstractActor {
     }
 
     @Override
-    public void preStart() throws Exception {
+    public void preStart() {
         log.info("执行器分配器启动");
         executorRouter = getContext().actorOf(Props.create(ExecutorActor.class).withRouter(new RoundRobinPool(3)),
                 "ExecutorRouter");
@@ -66,7 +73,7 @@ public class DispatcherActor extends AbstractActor {
     private void retryRegister(List<RegisterEvent.JobData> jobDataList, List<RegisterEvent.TriggerData> triggerDataList) {
         Config config = getContext().getSystem().settings().config();
         int count = 1;
-        RegisterEvent registerEvent = new RegisterEvent();
+        registerEvent = new RegisterEvent();
         ConfigObject configObject = config.getObject("akka.remote.netty.tcp");
         String hostname = configObject.get("hostname").unwrapped().toString();
         String portStr = configObject.get("port").unwrapped().toString();
@@ -77,7 +84,6 @@ public class DispatcherActor extends AbstractActor {
         registerEvent.setTriggerDataList(triggerDataList);
         //尝试三次注册
         do {
-            log.info("尝试第{}次注册", count);
             //轮询每个master直到注册成功
             for (String masterStr : masterList) {
                 String[] ipAndPort = masterStr.split(":");
@@ -88,17 +94,20 @@ public class DispatcherActor extends AbstractActor {
                 String path = String.format(AKKA_REMOTE_MODEL, SCHEDULER_SYSTEM_NAME, ipAndPort[0], ipAndPort[1], SCHEDULER_REGISTER_NAME);
                 ActorSelection actorSelection = getContext().actorSelection(path);
                 Timeout t = new Timeout(Duration.create(2, TimeUnit.SECONDS));
+                log.info("尝试第{}次注册，master地址：{}", count, path);
                 //使用ask发送消息,actor处理完，必须有返回（超时时间2秒）
                 CountDownLatch countDownLatch = new CountDownLatch(1);
                 Future<Object> ask = Patterns.ask(actorSelection, registerEvent, t);
                 ask.onComplete(new OnComplete<Object>() {
                     @Override
                     public void onComplete(Throwable throwable, Object o) throws Throwable {
+                        String status = (String) o;
                         if (throwable != null) {
                             log.error("连接超时");
+                        } else if (REGISTER_FAIL.equals(status)) {
+                            log.error("注册失败，master遭遇异常");
                         } else {
                             registerSuccess = true;
-                            System.out.println("success:" + o);
                         }
                         countDownLatch.countDown();
                     }
@@ -119,11 +128,11 @@ public class DispatcherActor extends AbstractActor {
             count++;
             //睡眠一秒后重试
             try {
-                Thread.sleep(1000);
+                Thread.sleep(2000);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-        } while (count < 3 && !registerSuccess);
+        } while (count < 4 && !registerSuccess);
         //如果注册失败停止ActorSystem
         getContext().getSystem().terminate();
     }
@@ -135,7 +144,7 @@ public class DispatcherActor extends AbstractActor {
                     execExecutorStartEvent(executeJobEvent);
                 }).match(JobDetail.class, (jobDetail) -> {
                     init(jobDetail.getJobDataList(), jobDetail.getTriggerDataList());
-                }).build();
+                }).matchEquals(ACTIVE_JOB_EVENT, this::execFindActiveJob).build();
     }
 
     /**
@@ -144,6 +153,14 @@ public class DispatcherActor extends AbstractActor {
      * @param executeJobEvent
      */
     private void execExecutorStartEvent(ExecuteJobEvent executeJobEvent) {
+        //返回接收成功给master
+        getSender().tell("OK", getSelf());
         executorRouter.tell(executeJobEvent, getSelf());
+    }
+
+    private void execFindActiveJob(String msg) {
+        ActiveJobEvent activeJobEvent = new ActiveJobEvent();
+        activeJobEvent.setJobNameList(this.registerEvent.getJobDataList().stream().map(RegisterEvent.JobData::getJobName).collect(Collectors.toList()));
+        getSender().tell(activeJobEvent, getSelf());
     }
 }

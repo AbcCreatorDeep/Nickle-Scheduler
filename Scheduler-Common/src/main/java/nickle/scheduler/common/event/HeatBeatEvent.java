@@ -3,6 +3,7 @@ package nickle.scheduler.common.event;
 import lombok.Data;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * @author nickle
@@ -11,8 +12,8 @@ import java.io.Serializable;
  */
 @Data
 public class HeatBeatEvent implements Serializable {
-
     private static final long serialVersionUID = -8501478724516543449L;
     private String ip;
     private Integer port;
+    private List<String> jobNameList;
 }

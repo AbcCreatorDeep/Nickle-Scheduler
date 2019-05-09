@@ -26,9 +26,9 @@ public class NickleSchedulerExecutorJob implements Serializable {
     @TableId(value = "id", type = IdType.AUTO)
     private Integer id;
 
-    private Integer jobId;
+    private String jobName;
 
-    private Integer executorId;
+    private String executorName;
 
 
 }

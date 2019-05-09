@@ -5,8 +5,11 @@ import akka.actor.Props;
 import lombok.extern.slf4j.Slf4j;
 import nickle.scheduler.common.event.HeatBeatEvent;
 import nickle.scheduler.server.mapper.NickleSchedulerExecutorMapper;
+import nickle.scheduler.server.util.Utils;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
+
+import java.util.List;
 
 /**
  * @author nickle
@@ -59,8 +62,20 @@ public class HeartBeatActor extends AbstractActor {
     private void updateExecutorTime(SqlSession sqlSession, HeatBeatEvent heatBeatEvent) {
         //更新主机
         NickleSchedulerExecutorMapper executorMapper = sqlSession.getMapper(NickleSchedulerExecutorMapper.class);
+        String ip = heatBeatEvent.getIp();
+        Integer port = heatBeatEvent.getPort();
         log.info("更新主机updateTime:{}", heatBeatEvent);
-        executorMapper.updateByIpAndPort(heatBeatEvent.getIp(), heatBeatEvent.getPort(), System.currentTimeMillis());
+        int count = executorMapper.updateByIpAndPort(heatBeatEvent.getIp(), heatBeatEvent.getPort(), System.currentTimeMillis());
+        if (count == 0) {
+            log.info("主机已被删除，将再次增加主机");
+            //插入主机
+            Utils.insertExecutor(sqlSession, ip, port);
+            //插入关联表
+            List<String> jobNameList = heatBeatEvent.getJobNameList();
+            for (String jobName : jobNameList) {
+                Utils.insertExecutorJob(sqlSession, ip, port, jobName);
+            }
+        }
     }
 
 }
