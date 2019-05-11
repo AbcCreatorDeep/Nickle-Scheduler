@@ -12,5 +12,5 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  * @since 2019-05-08
  */
 public interface NickleSchedulerLockMapper extends BaseMapper<NickleSchedulerLock> {
-    void lock(String lockName);
+    NickleSchedulerLock lock(String lockName);
 }

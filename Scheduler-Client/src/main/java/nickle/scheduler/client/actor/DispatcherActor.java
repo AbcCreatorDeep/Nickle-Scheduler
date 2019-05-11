@@ -38,7 +38,7 @@ public class DispatcherActor extends AbstractActor {
     /**
      * @// TODO: 2019/5/11 每个调度器actor需保证高可用
      */
-    private Router schdulerRouter;
+    private Router masterRouter;
 
 
     public static Props props() {
@@ -85,7 +85,7 @@ public class DispatcherActor extends AbstractActor {
                 ClientUtils.exit(getContext());
                 return;
             }
-            String path = String.format(AKKA_REMOTE_MODEL, SCHEDULER_SYSTEM_NAME, ipAndPort[0], ipAndPort[1], SCHEDULER_REGISTER_NAME);
+            String path = String.format(AKKA_REMOTE_MODEL, SCHEDULER_SYSTEM_NAME, ipAndPort[0], ipAndPort[1], MASTER_MANAGER_ACTOR_NAME);
             routeeList.add(new ActorRefRoutee(getContext().actorFor(path)));
         }
         masterRouter = new Router(new RandomRoutingLogic(), routeeList);
@@ -105,15 +105,11 @@ public class DispatcherActor extends AbstractActor {
                 return;
             }
             initMasterRouter();
-            registerEvent = new RegisterEvent();
             ConfigObject configObject = config.getObject("akka.remote.netty.tcp");
             String hostname = configObject.get("hostname").unwrapped().toString();
             String portStr = configObject.get("port").unwrapped().toString();
             Integer port = Integer.valueOf(portStr);
-            registerEvent.setIp(hostname);
-            registerEvent.setPort(port);
-            registerEvent.setJobDataList(clientRegisterEvent.getJobDataList());
-            registerEvent.setTriggerDataList(clientRegisterEvent.getTriggerDataList());
+            registerEvent = new RegisterEvent(hostname, port, clientRegisterEvent.getJobDataList(), clientRegisterEvent.getTriggerDataList());
             masterRouter.route(registerEvent, getSelf());
             //睡眠1s后注册，避免频繁注册
             Thread.sleep(1000);

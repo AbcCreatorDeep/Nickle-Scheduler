@@ -52,10 +52,7 @@ public class HeartBeatActor extends AbstractActor {
     }
 
     private void heartBeatToMaster(ActiveJobEvent activeJobEvent) {
-        HeatBeatEvent heatBeatEvent = new HeatBeatEvent();
-        heatBeatEvent.setIp(localHostName);
-        heatBeatEvent.setPort(localPort);
-        heatBeatEvent.setJobNameList(activeJobEvent.getJobNameList());
+        HeatBeatEvent heatBeatEvent = new HeatBeatEvent(localHostName, localPort, activeJobEvent.getJobNameList());
         masterRouter.route(heatBeatEvent, getSelf());
         nextHeart();
     }

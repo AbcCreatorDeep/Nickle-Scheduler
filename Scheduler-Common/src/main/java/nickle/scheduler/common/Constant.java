@@ -17,6 +17,8 @@ public class Constant {
      * 调度器配置
      */
     public static final String SCHEDULER_SYSTEM_NAME = "schedulerSystem";
+    public static final String MASTER_ACTOR_NAME = "masterActor";
+    public static final String MASTER_MANAGER_ACTOR_NAME = "masterManagerActor";
     public static final String SCHEDULER_REGISTER_NAME = "schedulerRegisterActor";
     public static final String SCHEDULER_CHECKER_NAME = "schedulerCheckerActor";
     public static final String SCHEDULER_HEART_BEAT_NAME = "schedulerHeartBeatActor";

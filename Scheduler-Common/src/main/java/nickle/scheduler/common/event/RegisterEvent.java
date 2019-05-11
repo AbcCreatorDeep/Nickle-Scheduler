@@ -1,5 +1,6 @@
 package nickle.scheduler.common.event;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
@@ -13,7 +14,8 @@ import java.util.List;
  * @date 2019/5/8 14:05
  */
 @Data
-public class RegisterEvent implements Serializable {
+@AllArgsConstructor
+public final class RegisterEvent implements Serializable {
     private static final long serialVersionUID = -5966528694172083106L;
 
     @Data
@@ -37,8 +39,8 @@ public class RegisterEvent implements Serializable {
         private String triggerCron;
     }
 
-    private String ip;
-    private Integer port;
-    private List<JobData> jobDataList;
-    private List<TriggerData> triggerDataList;
+    private final String ip;
+    private final Integer port;
+    private final List<JobData> jobDataList;
+    private final List<TriggerData> triggerDataList;
 }

@@ -7,6 +7,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.extern.slf4j.Slf4j;
 import nickle.scheduler.common.cron.CronExpression;
 import nickle.scheduler.server.entity.NickleSchedulerJob;
+import nickle.scheduler.server.entity.NickleSchedulerLock;
 import nickle.scheduler.server.entity.NickleSchedulerTrigger;
 import nickle.scheduler.server.mapper.NickleSchedulerJobMapper;
 import nickle.scheduler.server.mapper.NickleSchedulerLockMapper;
@@ -53,7 +54,7 @@ public class SchedulerActor extends AbstractActor {
     private SqlSessionFactory sqlSessionFactory;
 
     @Override
-    public void preStart() throws Exception {
+    public void preStart() {
         log.info("调度器启动");
         cycleSchedule(SCHEDULE);
     }
@@ -80,7 +81,7 @@ public class SchedulerActor extends AbstractActor {
             NickleSchedulerTriggerMapper schedulerTriggerMapper = sqlSession.getMapper(NickleSchedulerTriggerMapper.class);
             NickleSchedulerLockMapper schedulerLockMapper = sqlSession.getMapper(NickleSchedulerLockMapper.class);
             //获取锁防止多个schduler同时获取到相同的任务
-            schedulerLockMapper.lock(LOCK_NAME);
+            NickleSchedulerLock lock = schedulerLockMapper.lock(LOCK_NAME);
             //查询需要执行的任务
             QueryWrapper<NickleSchedulerTrigger> queryWrapper = new QueryWrapper<>();
             /**
@@ -88,6 +89,8 @@ public class SchedulerActor extends AbstractActor {
              * 1、触发器状态为STAND_BY且时间在当前时间+调度时间内
              * 2、触发器状态为ACQUIRED但更新时间小于一次性获取的时间+容错时间(为了防止调度器修改完状态后down机)
              */
+            log.info("sqlsession:{},lock:{},schedulerLockMapper:{}", sqlSession, lock, schedulerLockMapper);
+            log.info("datasouce:{}",sqlSession.getConnection());
             queryWrapper.lambda()
                     .and(qw -> qw.le(NickleSchedulerTrigger::getTriggerNextTime, System.currentTimeMillis() + SCHEDULE_TIME)
                             .eq(NickleSchedulerTrigger::getTriggerStatus, STAND_BY))
@@ -97,6 +100,8 @@ public class SchedulerActor extends AbstractActor {
             Page<NickleSchedulerTrigger> triggerPage = new Page<>(1, SCHEDULE_TRIGGER_NUM);
             List<NickleSchedulerTrigger> nickleSchedulerTriggers = schedulerTriggerMapper.selectPage(triggerPage, queryWrapper).getRecords();
             log.info("需要调度的触发器：{}", nickleSchedulerTriggers);
+            log.info("this：{}", this);
+            Thread.sleep(15000);
             if (ObjectUtils.isEmpty(nickleSchedulerTriggers)) {
                 log.info("结束扫描待调度任务,无调度触发器");
                 nextSchedule();

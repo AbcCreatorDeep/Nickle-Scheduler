@@ -5,6 +5,12 @@ spring:
     url: jdbc:mysql://127.0.0.1:3306/nickle-scheduler?Unicode=true&characterEncoding=UTF-8&serverTimezone=UTC
     username: root
     password: root
+    hikari:
+      idle-timeout: 60000
+      connection-timeout: 60000
+      validation-timeout: 3000
+      login-timeout: 5
+      max-lifetime: 60000
 mybatis-plus:
   mapper-locations: classpath:mapper/*.xml
 # 自定义配置
@@ -13,4 +19,5 @@ nickle:
     schedule-time: 10*1000
 logging:
   level:
-    nickle.scheduler.server.mapper.NickleSchedulerTriggerMapper: DEBUG
+    nickle.scheduler.server.mapper: debug
+    nickle.scheduler.server.actor.HeartBeatActor: ERROR

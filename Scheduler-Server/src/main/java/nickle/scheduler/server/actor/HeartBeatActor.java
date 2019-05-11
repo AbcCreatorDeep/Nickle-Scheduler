@@ -27,7 +27,7 @@ public class HeartBeatActor extends AbstractActor {
     }
 
     @Override
-    public void preStart() throws Exception {
+    public void preStart(){
         log.info("心跳检测器启动");
     }
 
