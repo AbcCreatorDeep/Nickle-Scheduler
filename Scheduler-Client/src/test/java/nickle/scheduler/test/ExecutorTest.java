@@ -10,6 +10,7 @@ import akka.testkit.javadsl.TestKit;
 import akka.util.Timeout;
 import com.google.common.collect.Lists;
 import nickle.scheduler.client.actor.DispatcherActor;
+import nickle.scheduler.client.event.ClientRegisterEvent;
 import nickle.scheduler.common.event.RegisterEvent;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
@@ -96,20 +97,35 @@ public class ExecutorTest {
     @Test
     public void testRegister() throws IOException {
         ActorRef actorRef = system.actorOf(DispatcherActor.props(), EXECUTOR_DISPATCHER_NAME);
-        DispatcherActor.JobDetail jobDetail = new DispatcherActor.JobDetail();
+        ClientRegisterEvent jobDetail = new ClientRegisterEvent();
         ArrayList<RegisterEvent.JobData> jobDataArrayList = Lists.newArrayList();
         ArrayList<RegisterEvent.TriggerData> triggerDataArrayList = Lists.newArrayList();
-        RegisterEvent.JobData jobData = new RegisterEvent.JobData();
-        jobData.setJobAuthor("nickle");
-        jobData.setJobClassName("nickle.scheduler.test.DemoJob");
-        jobData.setJobDescription("测试job");
-        jobData.setJobName("testJob");
-        jobData.setJobTriggerName("testTrigger");
-        RegisterEvent.TriggerData triggerData = new RegisterEvent.TriggerData();
-        triggerData.setTriggerCron("10 * * * * ?");
-        triggerData.setTriggerName("testTrigger");
-        jobDataArrayList.add(jobData);
-        triggerDataArrayList.add(triggerData);
+        RegisterEvent.JobData jobData1 = new RegisterEvent.JobData();
+        jobData1.setJobAuthor("nickle");
+        jobData1.setJobClassName("nickle.scheduler.test.DemoJob1");
+        jobData1.setJobDescription("测试job1");
+        jobData1.setJobName("testJob1");
+        jobData1.setJobTriggerName("testTrigger1");
+        RegisterEvent.TriggerData triggerData1 = new RegisterEvent.TriggerData();
+        triggerData1.setTriggerCron("*/5 * * * * ?");
+        triggerData1.setTriggerName("testTrigger1");
+
+
+        RegisterEvent.JobData jobData2 = new RegisterEvent.JobData();
+        jobData2.setJobAuthor("nickle");
+        jobData2.setJobClassName("nickle.scheduler.test.DemoJob2");
+        jobData2.setJobDescription("测试job2");
+        jobData2.setJobName("testJob2");
+        jobData2.setJobTriggerName("testTrigger2");
+        RegisterEvent.TriggerData triggerData2 = new RegisterEvent.TriggerData();
+        triggerData2.setTriggerCron("*/5 * * * * ?");
+        triggerData2.setTriggerName("testTrigger2");
+
+
+        jobDataArrayList.add(jobData1);
+        jobDataArrayList.add(jobData2);
+        triggerDataArrayList.add(triggerData1);
+        triggerDataArrayList.add(triggerData2);
         jobDetail.setJobDataList(jobDataArrayList);
         jobDetail.setTriggerDataList(triggerDataArrayList);
         actorRef.tell(jobDetail, actorRef);

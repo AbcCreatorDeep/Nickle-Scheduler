@@ -28,6 +28,8 @@ create table nickle_scheduler_trigger(
     trigger_name varchar(100) not null,
     trigger_cron varchar(100) not null,
     trigger_next_time bigint not null,
+    trigger_status int not null,
+    trigger_update_time bigint not null,
     unique key(trigger_name)
 );
 create table nickle_scheduler_run_job(

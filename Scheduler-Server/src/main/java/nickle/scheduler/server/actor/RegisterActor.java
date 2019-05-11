@@ -14,6 +14,7 @@ import nickle.scheduler.server.mapper.NickleSchedulerExecutorJobMapper;
 import nickle.scheduler.server.mapper.NickleSchedulerExecutorMapper;
 import nickle.scheduler.server.mapper.NickleSchedulerJobMapper;
 import nickle.scheduler.server.mapper.NickleSchedulerTriggerMapper;
+import nickle.scheduler.server.util.ThreadLocals;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 
@@ -21,6 +22,7 @@ import java.util.Date;
 import java.util.List;
 
 import static nickle.scheduler.common.Constant.*;
+import static nickle.scheduler.server.constant.Constant.STAND_BY;
 
 /**
  * @author nickle
@@ -41,7 +43,7 @@ public class RegisterActor extends AbstractActor {
     }
 
     @Override
-    public void preStart() throws Exception {
+    public void preStart() {
         log.info("注册器启动");
     }
 
@@ -51,11 +53,12 @@ public class RegisterActor extends AbstractActor {
     }
 
     public void registerExecutorAndJob(RegisterEvent registerEvent) {
-        SqlSession sqlSession = sqlSessionFactory.openSession(true);
+        SqlSession sqlSession = sqlSessionFactory.openSession(false);
         log.info("注册开始:{}", registerEvent);
         try {
-            insertExecutorAndJob(sqlSession, registerEvent);
-            insertTrigger(sqlSession, registerEvent);
+            ThreadLocals.setSqlSession(sqlSession);
+            insertExecutorAndJob(registerEvent);
+            insertTrigger(registerEvent);
             sqlSession.commit();
             //通知注册成功
             getSender().tell(REGISTER_OK, getSelf());
@@ -65,6 +68,7 @@ public class RegisterActor extends AbstractActor {
             //通知注册失败
             getSender().tell(REGISTER_FAIL, getSelf());
         } finally {
+            ThreadLocals.releaseSqlSession();
             sqlSession.close();
         }
         log.info("注册结束");
@@ -110,7 +114,26 @@ public class RegisterActor extends AbstractActor {
         return executorJobMapper.selectOne(queryWrapper) == null;
     }
 
-    private void insertExecutorAndJob(SqlSession sqlSession, RegisterEvent registerEvent) {
+    /**
+     * 检测触发器和job关联表
+     *
+     * @param nickleSchedulerExecutorJob
+     * @return
+     */
+    private boolean checkExecutorJob(NickleSchedulerExecutorJobMapper executorJobMapper, NickleSchedulerExecutorJob nickleSchedulerExecutorJob) {
+        QueryWrapper<NickleSchedulerExecutorJob> queryWrapper = new QueryWrapper<>();
+        queryWrapper.lambda().eq(NickleSchedulerExecutorJob::getJobName, nickleSchedulerExecutorJob.getJobName())
+                .eq(NickleSchedulerExecutorJob::getExecutorName, nickleSchedulerExecutorJob.getExecutorName());
+        return executorJobMapper.selectOne(queryWrapper) == null;
+    }
+
+    /**
+     * 插入执行器和job
+     *
+     * @param registerEvent
+     */
+    private void insertExecutorAndJob(RegisterEvent registerEvent) {
+        SqlSession sqlSession = ThreadLocals.getSqlSession();
         NickleSchedulerExecutorMapper executorMapper = sqlSession.getMapper(NickleSchedulerExecutorMapper.class);
         NickleSchedulerJobMapper jobMapper = sqlSession.getMapper(NickleSchedulerJobMapper.class);
         NickleSchedulerExecutorJobMapper executorJobMapper = sqlSession.getMapper(NickleSchedulerExecutorJobMapper.class);
@@ -146,17 +169,31 @@ public class RegisterActor extends AbstractActor {
             NickleSchedulerExecutorJob executorJob = new NickleSchedulerExecutorJob();
             executorJob.setExecutorName(ipPortStr);
             executorJob.setJobName(nickleSchedulerJob.getJobName());
-            log.info("插入executor和job的关联表:{}", nickleSchedulerJob);
-            executorJobMapper.insert(executorJob);
+            if (checkExecutorJob(executorJobMapper, executorJob)) {
+                log.info("插入executor和job的关联表:{}", nickleSchedulerJob);
+                executorJobMapper.insert(executorJob);
+            } else {
+                log.info("executor和job的关联存在，忽略");
+            }
+
         }
     }
 
-    private void insertTrigger(SqlSession sqlSession, RegisterEvent registerEvent) throws Exception {
+    /**
+     * 插入触发器
+     *
+     * @param registerEvent
+     * @throws Exception
+     */
+    private void insertTrigger(RegisterEvent registerEvent) throws Exception {
+        SqlSession sqlSession = ThreadLocals.getSqlSession();
         NickleSchedulerTriggerMapper triggerMapper = sqlSession.getMapper(NickleSchedulerTriggerMapper.class);
         for (RegisterEvent.TriggerData triggerData : registerEvent.getTriggerDataList()) {
             NickleSchedulerTrigger trigger = new NickleSchedulerTrigger();
             trigger.setTriggerCron(triggerData.getTriggerCron());
             trigger.setTriggerName(triggerData.getTriggerName());
+            trigger.setTriggerUpdateTime(System.currentTimeMillis());
+            trigger.setTriggerStatus(STAND_BY);
             CronExpression cronExpression = new CronExpression(trigger.getTriggerCron());
             trigger.setTriggerNextTime(cronExpression.getTimeAfter(new Date()).getTime());
             if (checkTrigger(triggerMapper, trigger)) {

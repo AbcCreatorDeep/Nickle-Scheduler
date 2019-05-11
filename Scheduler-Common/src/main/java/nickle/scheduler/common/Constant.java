@@ -35,6 +35,10 @@ public class Constant {
      */
     public static final String REGISTER_FAIL = "REGISTER_FAIL";
     /**
+     * 用于Master回复心跳成功
+     */
+    public static final String HEARTBEAT_OK = "HEARTBEAT_OK";
+    /**
      * ip:port 模板
      */
     public static final String SOCKET_ADDRESS_MODEL = "%s:%d";

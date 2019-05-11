@@ -2,9 +2,9 @@
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://10.155.10.38:4502/nickle-scheduler?Unicode=true&characterEncoding=UTF-8
-    username: shark_dev
-    password: shark_dev
+    url: jdbc:mysql://127.0.0.1:3306/nickle-scheduler?Unicode=true&characterEncoding=UTF-8&serverTimezone=UTC
+    username: root
+    password: root
 mybatis-plus:
   mapper-locations: classpath:mapper/*.xml
 # 自定义配置
@@ -13,4 +13,4 @@ nickle:
     schedule-time: 10*1000
 logging:
   level:
-    nickle.scheduler.server.mapper: INFO
+    nickle.scheduler.server.mapper.NickleSchedulerTriggerMapper: DEBUG

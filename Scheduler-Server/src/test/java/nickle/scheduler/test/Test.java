@@ -2,7 +2,7 @@ package nickle.scheduler.test;
 
 import nickle.scheduler.common.event.RegisterEvent;
 import nickle.scheduler.server.entity.NickleSchedulerJob;
-import nickle.scheduler.server.util.BeanCopiers;
+import org.springframework.cglib.beans.BeanCopier;
 
 /**
  * @author nickle
@@ -14,7 +14,8 @@ public class Test {
         NickleSchedulerJob nickleSchedulerJob = new NickleSchedulerJob();
         RegisterEvent.JobData jobData = new RegisterEvent.JobData();
         jobData.setJobName("1231");
-        BeanCopiers.JOBDATA_COPY_TO_JOB.copy(jobData, nickleSchedulerJob, null);
-        System.out.println(jobData);
+        BeanCopier JOBDATA_COPY_TO_JOB = BeanCopier.create(RegisterEvent.JobData.class, NickleSchedulerJob.class, false);
+        JOBDATA_COPY_TO_JOB.copy(jobData, nickleSchedulerJob, null);
+        System.out.println(nickleSchedulerJob);
     }
 }

@@ -1,7 +1,6 @@
 package nickle.scheduler.server.util;
 
 import akka.actor.ActorContext;
-import akka.actor.ActorRef;
 import akka.actor.ActorSelection;
 import akka.dispatch.OnComplete;
 import akka.pattern.Patterns;
@@ -27,6 +26,8 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import static nickle.scheduler.common.Constant.*;
+import static nickle.scheduler.server.constant.Constant.NO_EXECUTOR;
+import static nickle.scheduler.server.constant.Constant.NO_EXECUTOR_FAIL;
 
 /**
  * @author nickle
@@ -34,15 +35,13 @@ import static nickle.scheduler.common.Constant.*;
  * @date 2019/5/8 10:17
  */
 @Slf4j
-public class Utils {
+public class Delegate {
     public static <T> void insertBatch(Collection<T> entityList, SqlSession sqlSession) {
 
     }
 
-    public static void scheduleJob(List<NickleSchedulerJob> nickleSchedulerRunJobs,
-                                   SqlSession sqlSession,
-                                   ActorContext actorContext,
-                                   ActorRef sender) {
+    public static void scheduleJob(List<NickleSchedulerJob> nickleSchedulerRunJobs) {
+        SqlSession sqlSession = ThreadLocals.getSqlSession();
         NickleSchedulerExecutorJobMapper executorJobMapper = sqlSession.getMapper(NickleSchedulerExecutorJobMapper.class);
         NickleSchedulerFailJobMapper failJobMapper = sqlSession.getMapper(NickleSchedulerFailJobMapper.class);
         log.info("需要调度的job：{}", nickleSchedulerRunJobs);
@@ -57,9 +56,9 @@ public class Utils {
                 //记录到失败表中
                 NickleSchedulerFailJob nickleSchedulerFailJob = new NickleSchedulerFailJob();
                 //如果第一次调度时保存将没有执行器
-                nickleSchedulerFailJob.setExecutorId(0);
+                nickleSchedulerFailJob.setExecutorId(NO_EXECUTOR);
                 nickleSchedulerFailJob.setJobName(job.getJobName());
-                nickleSchedulerFailJob.setFailReason((byte) 1);
+                nickleSchedulerFailJob.setFailReason(NO_EXECUTOR_FAIL);
                 nickleSchedulerFailJob.setTriggerName(job.getJobTriggerName());
                 nickleSchedulerFailJob.setFailedTime(System.currentTimeMillis());
                 nickleSchedulerFailJob.setJobId(job.getId());
@@ -67,7 +66,7 @@ public class Utils {
                 continue;
             } else {
                 //目前仅为简单任务
-                scheduleSimpleJob(job, sqlSession, nickleSchedulerExecutorJobs, actorContext, sender);
+                scheduleSimpleJob(job, nickleSchedulerExecutorJobs);
             }
         }
     }
@@ -76,16 +75,11 @@ public class Utils {
      * 调取简单任务
      *
      * @param job
-     * @param sqlSession
      * @param nickleSchedulerExecutorJobs
-     * @param actorContext
-     * @param sender
      */
-    public static void scheduleSimpleJob(NickleSchedulerJob job,
-                                         SqlSession sqlSession,
-                                         List<NickleSchedulerExecutorJob> nickleSchedulerExecutorJobs,
-                                         ActorContext actorContext,
-                                         ActorRef sender) {
+    public static void scheduleSimpleJob(NickleSchedulerJob job, List<NickleSchedulerExecutorJob> nickleSchedulerExecutorJobs) {
+        ActorContext actorContext = ThreadLocals.getActorContext();
+        SqlSession sqlSession = ThreadLocals.getSqlSession();
         NickleSchedulerExecutorMapper executorMapper = sqlSession.getMapper(NickleSchedulerExecutorMapper.class);
         //简单任务目前采用轮询算法来保证任务高可用
         for (NickleSchedulerExecutorJob executorJob : nickleSchedulerExecutorJobs) {

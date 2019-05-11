@@ -7,7 +7,7 @@ package nickle.scheduler.test; /**
 import akka.actor.ActorRef;
 import akka.actor.ActorSystem;
 import nickle.scheduler.server.Application;
-import nickle.scheduler.server.actor.CheckActor;
+import nickle.scheduler.server.actor.ExecutorCheckerActor;
 import nickle.scheduler.server.actor.HeartBeatActor;
 import nickle.scheduler.server.actor.RegisterActor;
 import nickle.scheduler.server.actor.SchedulerActor;
@@ -44,7 +44,7 @@ public class SpringTest {
     @Test
     public void testActorSystem() throws InterruptedException {
         ActorRef schedulerActor = actorSystem.actorOf(SchedulerActor.props(sqlSessionFactory), SCHEDULER_SYSTEM_NAME);
-        ActorRef checkActor = actorSystem.actorOf(CheckActor.props(sqlSessionFactory), SCHEDULER_CHECKER_NAME);
+        ActorRef checkActor = actorSystem.actorOf(ExecutorCheckerActor.props(sqlSessionFactory), SCHEDULER_CHECKER_NAME);
         ActorRef registerActor = actorSystem.actorOf(RegisterActor.props(sqlSessionFactory), SCHEDULER_REGISTER_NAME);
         ActorRef heartBeatActor = actorSystem.actorOf(HeartBeatActor.props(sqlSessionFactory), SCHEDULER_HEART_BEAT_NAME);
         try {
