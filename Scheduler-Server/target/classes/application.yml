@@ -11,6 +11,7 @@ spring:
       validation-timeout: 3000
       login-timeout: 5
       max-lifetime: 60000
+      auto-commit: false
 mybatis-plus:
   mapper-locations: classpath:mapper/*.xml
 # 自定义配置
