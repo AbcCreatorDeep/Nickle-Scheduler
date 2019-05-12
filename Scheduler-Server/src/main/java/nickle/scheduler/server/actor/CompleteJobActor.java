@@ -47,14 +47,14 @@ public class CompleteJobActor extends AbstractActor {
         try {
             NickleSchedulerRunJobMapper runJobMapper = sqlSession.getMapper(NickleSchedulerRunJobMapper.class);
             NickleSchedulerSuccessJobMapper successJobMapper = sqlSession.getMapper(NickleSchedulerSuccessJobMapper.class);
-            NickleSchedulerRunJob nickleSchedulerRunJob = runJobMapper.selectById(executeResultEvent.getJobId());
+            NickleSchedulerRunJob nickleSchedulerRunJob = runJobMapper.selectById(executeResultEvent.getRunJobId());
             if (nickleSchedulerRunJob == null) {
-                log.error("任务超时被删除，但是却传来了任务完成信息");
+                log.error("任务超时被删除，但是却传来了任务完成信息,{}", executeResultEvent);
                 this.getSender().tell(EXECUTOR_JOB_OK, getSelf());
                 return;
             }
             //删除运行任务表，将任务插入成功列表,并返回成功给客户端
-            runJobMapper.deleteById(executeResultEvent.getJobId());
+            runJobMapper.deleteById(executeResultEvent.getRunJobId());
             NickleSchedulerSuccessJob nickleSchedulerSuccessJob = new NickleSchedulerSuccessJob();
             nickleSchedulerSuccessJob.setExecutorId(nickleSchedulerRunJob.getExecutorId());
             nickleSchedulerSuccessJob.setJobId(nickleSchedulerRunJob.getJobId());

@@ -4,6 +4,7 @@ import akka.actor.AbstractActor;
 import akka.actor.Props;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.google.common.collect.Lists;
 import lombok.extern.slf4j.Slf4j;
 import nickle.scheduler.common.cron.CronExpression;
 import nickle.scheduler.server.entity.NickleSchedulerJob;
@@ -12,12 +13,12 @@ import nickle.scheduler.server.mapper.NickleSchedulerJobMapper;
 import nickle.scheduler.server.mapper.NickleSchedulerLockMapper;
 import nickle.scheduler.server.mapper.NickleSchedulerTriggerMapper;
 import nickle.scheduler.server.util.Delegate;
-import nickle.scheduler.server.util.ThreadLocals;
 import org.apache.commons.lang3.ObjectUtils;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 
 import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -37,7 +38,7 @@ public class SchedulerActor extends AbstractActor {
     /**
      * 默认每十秒调度一次
      */
-    private static final long SCHEDULE_TIME = 10 * 1000L;
+    private static final long SCHEDULE_TIME = 5 * 1000L;
     /**
      * 容错时间
      */
@@ -75,8 +76,6 @@ public class SchedulerActor extends AbstractActor {
         log.info("开始扫描待调度任务");
         SqlSession sqlSession = sqlSessionFactory.openSession();
         try {
-            ThreadLocals.setActorContext(getContext());
-            ThreadLocals.setActorRef(getSender());
             NickleSchedulerTriggerMapper schedulerTriggerMapper = sqlSession.getMapper(NickleSchedulerTriggerMapper.class);
             NickleSchedulerLockMapper schedulerLockMapper = sqlSession.getMapper(NickleSchedulerLockMapper.class);
             //获取锁防止多个schduler同时获取到相同的任务
@@ -106,19 +105,14 @@ public class SchedulerActor extends AbstractActor {
             }
             //修改trigger状态后释放锁
             modifyTriggerStatus(nickleSchedulerTriggers, sqlSession);
-            //获取新的sqlSession
-            sqlSession = sqlSessionFactory.openSession(false);
-            ThreadLocals.setSqlSession(sqlSession);
             //添加任务
             addRunJob(nickleSchedulerTriggers);
-            sqlSession.commit();
         } catch (Exception e) {
             sqlSession.rollback();
             e.printStackTrace();
             log.error("调度发生错误:{}", e.getMessage());
         } finally {
             sqlSession.close();
-            ThreadLocals.releaseAll();
         }
         log.info("结束扫描待调度任务");
         nextSchedule();
@@ -138,6 +132,7 @@ public class SchedulerActor extends AbstractActor {
             schedulerTriggerMapper.updateById(trigger);
         }
         sqlSession.commit();
+        sqlSession.close();
     }
 
     /**
@@ -146,9 +141,6 @@ public class SchedulerActor extends AbstractActor {
      * @param nickleSchedulerTriggers
      */
     private void addRunJob(List<NickleSchedulerTrigger> nickleSchedulerTriggers) throws ParseException, InterruptedException {
-        SqlSession sqlSession = ThreadLocals.getSqlSession();
-        NickleSchedulerTriggerMapper schedulerTriggerMapper = sqlSession.getMapper(NickleSchedulerTriggerMapper.class);
-        NickleSchedulerJobMapper jobMapper = sqlSession.getMapper(NickleSchedulerJobMapper.class);
         //由于降序排列所以以第一个为准,精准度控制在1s内
         NickleSchedulerTrigger nickleSchedulerTrigger = nickleSchedulerTriggers.get(0);
         long waitTime = nickleSchedulerTrigger.getTriggerNextTime() - System.currentTimeMillis();
@@ -157,29 +149,40 @@ public class SchedulerActor extends AbstractActor {
             log.info("一次性获取任务数：{},等待时间:{}", nickleSchedulerTriggers.size(), waitTime);
             Thread.sleep(waitTime);
         }
-        for (NickleSchedulerTrigger trigger : nickleSchedulerTriggers) {
-            // 获取触发器对应的job
-            QueryWrapper<NickleSchedulerJob> queryWrapper = new QueryWrapper<>();
-            queryWrapper.lambda().eq(NickleSchedulerJob::getJobTriggerName, trigger.getTriggerName());
-            List<NickleSchedulerJob> nickleSchedulerRunJobs = jobMapper.selectList(queryWrapper);
-            //调度任务
-            Delegate.scheduleJob(nickleSchedulerRunJobs);
-            //修改触发器下次执行时间
-            String triggerCron = trigger.getTriggerCron();
-            CronExpression cronExpression = new CronExpression(triggerCron);
-            long time = cronExpression.getTimeAfter(new Date()).getTime();
-            Date date = new Date();
-            date.setTime(time);
-            log.info("下一次调度时间为:{}", date);
-            trigger.setTriggerNextTime(time);
-            //恢复触发器状态
-            trigger.setTriggerStatus(STAND_BY);
-            schedulerTriggerMapper.updateById(trigger);
+        SqlSession sqlSession = sqlSessionFactory.openSession();
+        ArrayList<List<NickleSchedulerJob>> jobListList = Lists.newArrayList();
+        try {
+            NickleSchedulerTriggerMapper schedulerTriggerMapper = sqlSession.getMapper(NickleSchedulerTriggerMapper.class);
+            NickleSchedulerJobMapper jobMapper = sqlSession.getMapper(NickleSchedulerJobMapper.class);
+            for (NickleSchedulerTrigger trigger : nickleSchedulerTriggers) {
+                // 获取触发器对应的job
+                QueryWrapper<NickleSchedulerJob> queryWrapper = new QueryWrapper<>();
+                queryWrapper.lambda().eq(NickleSchedulerJob::getJobTriggerName, trigger.getTriggerName());
+                List<NickleSchedulerJob> nickleSchedulerRunJobs = jobMapper.selectList(queryWrapper);
+                jobListList.add(nickleSchedulerRunJobs);
+                //修改触发器下次执行时间
+                String triggerCron = trigger.getTriggerCron();
+                CronExpression cronExpression = new CronExpression(triggerCron);
+                long time = cronExpression.getTimeAfter(new Date()).getTime();
+                Date date = new Date();
+                date.setTime(time);
+                log.info("下一次调度时间为:{}", date);
+                trigger.setTriggerNextTime(time);
+                //恢复触发器状态
+                trigger.setTriggerStatus(STAND_BY);
+                schedulerTriggerMapper.updateById(trigger);
+            }
+            sqlSession.commit();
+        } finally {
+            sqlSession.close();
         }
-
+        //调度任务开始
+        jobListList.parallelStream().forEach(jobList -> Delegate.scheduleJob(jobList, sqlSessionFactory, getContext()));
     }
 
-
+    /**
+     * 下一次调度
+     */
     private void nextSchedule() {
         try {
             //由于多个调度器，采用随机睡眠增加调度效率和准确度

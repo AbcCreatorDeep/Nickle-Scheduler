@@ -12,6 +12,8 @@ spring:
       login-timeout: 5
       max-lifetime: 60000
       auto-commit: false
+      maximum-pool-size: 10
+      minimum-idle: 5
 mybatis-plus:
   mapper-locations: classpath:mapper/*.xml
 # 自定义配置
@@ -20,5 +22,4 @@ nickle:
     schedule-time: 10*1000
 logging:
   level:
-    nickle.scheduler.server.mapper: debug
-    nickle.scheduler.server.actor.HeartBeatActor: ERROR
+    nickle.scheduler.server.mapper: ERROR

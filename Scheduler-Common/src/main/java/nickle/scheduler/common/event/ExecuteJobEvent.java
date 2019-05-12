@@ -15,5 +15,5 @@ import java.io.Serializable;
 public final class ExecuteJobEvent implements Serializable {
     private static final long serialVersionUID = 110258378672068099L;
     private final String className;
-    private final Integer jobId;
+    private final Integer runJobId;
 }

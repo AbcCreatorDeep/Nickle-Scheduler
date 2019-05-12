@@ -53,7 +53,7 @@ public class ExecutorActor extends AbstractActor {
         SafeJob safeJob = new SafeJob(job);
         safeJob.execute(null);
         ExecuteResultEvent executeResultEvent = new ExecuteResultEvent();
-        executeResultEvent.setJobId(executeJobEvent.getJobId());
+        executeResultEvent.setRunJobId(executeJobEvent.getRunJobId());
         executeResultEvent.setThrowable(safeJob.getExeception());
         notifyMaster(executeResultEvent);
     }

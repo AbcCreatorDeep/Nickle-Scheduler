@@ -8,5 +8,5 @@ import java.io.Serializable;
 public class ExecuteResultEvent implements Serializable {
     private static final long serialVersionUID = 5930026674578943550L;
     private Throwable throwable;
-    private Integer jobId;
+    private Integer runJobId;
 }

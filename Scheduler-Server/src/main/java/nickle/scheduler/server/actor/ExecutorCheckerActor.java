@@ -4,9 +4,11 @@ import akka.actor.AbstractActor;
 import akka.actor.Props;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import lombok.extern.slf4j.Slf4j;
-import nickle.scheduler.server.entity.*;
+import nickle.scheduler.server.entity.NickleSchedulerExecutor;
+import nickle.scheduler.server.entity.NickleSchedulerFailJob;
+import nickle.scheduler.server.entity.NickleSchedulerJob;
+import nickle.scheduler.server.entity.NickleSchedulerRunJob;
 import nickle.scheduler.server.mapper.*;
-import nickle.scheduler.server.util.ThreadLocals;
 import nickle.scheduler.server.util.Delegate;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
@@ -71,9 +73,6 @@ public class ExecutorCheckerActor extends AbstractActor {
         log.info("开始检测无心跳主机");
         SqlSession sqlSession = sqlSessionFactory.openSession(false);
         try {
-            ThreadLocals.setSqlSession(sqlSession);
-            ThreadLocals.setActorContext(getContext());
-            ThreadLocals.setActorRef(getSender());
             NickleSchedulerLockMapper lockMapper = sqlSession.getMapper(NickleSchedulerLockMapper.class);
             //上锁
             lockMapper.lock(LOCK_NAME);
@@ -92,14 +91,13 @@ public class ExecutorCheckerActor extends AbstractActor {
             //删除主机关联的job并重调度该执行器下的job
             for (NickleSchedulerExecutor schedulerExecutor : schedulerExecutors) {
                 //重调度
-                reSchedulerDeathExecutorJob(schedulerExecutor.getExecutorId());
+                reSchedulerDeathExecutorJob(schedulerExecutor.getExecutorId(), sqlSession);
             }
             sqlSession.commit();
         } catch (Exception e) {
             log.error("检测发生错误:{}", e.getMessage());
         } finally {
             sqlSession.close();
-            ThreadLocals.releaseAll();
         }
         log.info("结束检测无心跳主机");
         nextCheck();
@@ -108,8 +106,7 @@ public class ExecutorCheckerActor extends AbstractActor {
     /**
      * 重调度失败的任务
      */
-    private void reSchedulerDeathExecutorJob(Integer executorId) {
-        SqlSession sqlSession = ThreadLocals.getSqlSession();
+    private void reSchedulerDeathExecutorJob(Integer executorId, SqlSession sqlSession) {
         NickleSchedulerRunJobMapper runJobMapper = sqlSession.getMapper(NickleSchedulerRunJobMapper.class);
         NickleSchedulerJobMapper jobMapper = sqlSession.getMapper(NickleSchedulerJobMapper.class);
         //获取需要重调度任务
@@ -125,7 +122,7 @@ public class ExecutorCheckerActor extends AbstractActor {
             writeFailJob(nickleSchedulerRunJobs, sqlSession);
             //重调度
             List<NickleSchedulerJob> nickleSchedulerJobs = jobMapper.selectBatchIds(nickleSchedulerRunJobs.stream().map(NickleSchedulerRunJob::getJobId).collect(Collectors.toList()));
-            Delegate.scheduleJob(nickleSchedulerJobs);
+            Delegate.scheduleJob(nickleSchedulerJobs, sqlSessionFactory, getContext());
         }
     }
 

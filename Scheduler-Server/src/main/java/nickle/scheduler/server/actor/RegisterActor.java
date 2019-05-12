@@ -14,7 +14,6 @@ import nickle.scheduler.server.mapper.NickleSchedulerExecutorJobMapper;
 import nickle.scheduler.server.mapper.NickleSchedulerExecutorMapper;
 import nickle.scheduler.server.mapper.NickleSchedulerJobMapper;
 import nickle.scheduler.server.mapper.NickleSchedulerTriggerMapper;
-import nickle.scheduler.server.util.ThreadLocals;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 
@@ -56,9 +55,8 @@ public class RegisterActor extends AbstractActor {
         SqlSession sqlSession = sqlSessionFactory.openSession(false);
         log.info("注册开始:{}", registerEvent);
         try {
-            ThreadLocals.setSqlSession(sqlSession);
-            insertExecutorAndJob(registerEvent);
-            insertTrigger(registerEvent);
+            insertExecutorAndJob(registerEvent, sqlSession);
+            insertTrigger(registerEvent, sqlSession);
             sqlSession.commit();
             //通知注册成功
             getSender().tell(REGISTER_OK, getSelf());
@@ -68,7 +66,6 @@ public class RegisterActor extends AbstractActor {
             //通知注册失败
             getSender().tell(REGISTER_FAIL, getSelf());
         } finally {
-            ThreadLocals.releaseSqlSession();
             sqlSession.close();
         }
         log.info("注册结束");
@@ -132,8 +129,7 @@ public class RegisterActor extends AbstractActor {
      *
      * @param registerEvent
      */
-    private void insertExecutorAndJob(RegisterEvent registerEvent) {
-        SqlSession sqlSession = ThreadLocals.getSqlSession();
+    private void insertExecutorAndJob(RegisterEvent registerEvent, SqlSession sqlSession) {
         NickleSchedulerExecutorMapper executorMapper = sqlSession.getMapper(NickleSchedulerExecutorMapper.class);
         NickleSchedulerJobMapper jobMapper = sqlSession.getMapper(NickleSchedulerJobMapper.class);
         NickleSchedulerExecutorJobMapper executorJobMapper = sqlSession.getMapper(NickleSchedulerExecutorJobMapper.class);
@@ -185,8 +181,7 @@ public class RegisterActor extends AbstractActor {
      * @param registerEvent
      * @throws Exception
      */
-    private void insertTrigger(RegisterEvent registerEvent) throws Exception {
-        SqlSession sqlSession = ThreadLocals.getSqlSession();
+    private void insertTrigger(RegisterEvent registerEvent, SqlSession sqlSession) throws Exception {
         NickleSchedulerTriggerMapper triggerMapper = sqlSession.getMapper(NickleSchedulerTriggerMapper.class);
         for (RegisterEvent.TriggerData triggerData : registerEvent.getTriggerDataList()) {
             NickleSchedulerTrigger trigger = new NickleSchedulerTrigger();
