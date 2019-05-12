@@ -26,6 +26,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import static nickle.scheduler.common.Constant.*;
+import static nickle.scheduler.server.constant.Constant.EXECUTOR_NOT_CONNECTED;
 import static nickle.scheduler.server.constant.Constant.NO_EXECUTOR;
 import static nickle.scheduler.server.constant.Constant.NO_EXECUTOR_FAIL;
 
@@ -43,7 +44,6 @@ public class Delegate {
     public static void scheduleJob(List<NickleSchedulerJob> nickleSchedulerRunJobs) {
         SqlSession sqlSession = ThreadLocals.getSqlSession();
         NickleSchedulerExecutorJobMapper executorJobMapper = sqlSession.getMapper(NickleSchedulerExecutorJobMapper.class);
-        NickleSchedulerFailJobMapper failJobMapper = sqlSession.getMapper(NickleSchedulerFailJobMapper.class);
         log.info("需要调度的job：{}", nickleSchedulerRunJobs);
         for (NickleSchedulerJob job : nickleSchedulerRunJobs) {
             //获取到job对应执行器，选取发送
@@ -54,21 +54,30 @@ public class Delegate {
                 //此时该job的执行器为空，待处理
                 log.error("当前任务没有可用执行器:{},已记录到失败表中", job);
                 //记录到失败表中
-                NickleSchedulerFailJob nickleSchedulerFailJob = new NickleSchedulerFailJob();
-                //如果第一次调度时保存将没有执行器
-                nickleSchedulerFailJob.setExecutorId(NO_EXECUTOR);
-                nickleSchedulerFailJob.setJobName(job.getJobName());
-                nickleSchedulerFailJob.setFailReason(NO_EXECUTOR_FAIL);
-                nickleSchedulerFailJob.setTriggerName(job.getJobTriggerName());
-                nickleSchedulerFailJob.setFailedTime(System.currentTimeMillis());
-                nickleSchedulerFailJob.setJobId(job.getId());
-                failJobMapper.insert(nickleSchedulerFailJob);
+                insertFailJob(job, NO_EXECUTOR, NO_EXECUTOR_FAIL);
                 continue;
             } else {
                 //目前仅为简单任务
                 scheduleSimpleJob(job, nickleSchedulerExecutorJobs);
             }
         }
+    }
+
+    /**
+     * 将任务放置到失败列表
+     */
+    private static void insertFailJob(NickleSchedulerJob job, Integer executorId, Byte failStatus) {
+        SqlSession sqlSession = ThreadLocals.getSqlSession();
+        NickleSchedulerFailJobMapper failJobMapper = sqlSession.getMapper(NickleSchedulerFailJobMapper.class);
+        NickleSchedulerFailJob nickleSchedulerFailJob = new NickleSchedulerFailJob();
+        //如果第一次调度时保存将没有执行器
+        nickleSchedulerFailJob.setExecutorId(executorId);
+        nickleSchedulerFailJob.setJobName(job.getJobName());
+        nickleSchedulerFailJob.setFailReason(failStatus);
+        nickleSchedulerFailJob.setTriggerName(job.getJobTriggerName());
+        nickleSchedulerFailJob.setFailedTime(System.currentTimeMillis());
+        nickleSchedulerFailJob.setJobId(job.getId());
+        failJobMapper.insert(nickleSchedulerFailJob);
     }
 
     /**
@@ -140,7 +149,8 @@ public class Delegate {
                 log.info("job:{}调度失败，执行器为：{}", job, nickleSchedulerExecutor);
             }
         }
-
+        //执行到这里证明所有执行器都无法连接，将会把任务失败
+        insertFailJob(job, NO_EXECUTOR, EXECUTOR_NOT_CONNECTED);
     }
 
     /**
@@ -221,4 +231,6 @@ public class Delegate {
         log.info("插入主机 JOB关联表");
         executorJobMapper.insert(executorJob);
     }
+
+
 }

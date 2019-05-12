@@ -22,8 +22,9 @@ public class Constant {
     public static final Integer NO_EXECUTOR = 0;
 
     /**
-     * 1：没有找到执行器，2：任务超时重调度
+     * 1：没有找到执行器，2：任务超时重调度, 3：所有执行器无法连接
      */
     public static final Byte NO_EXECUTOR_FAIL = 1;
-    public static final Byte JOB_TIME_OUT = 0;
+    public static final Byte JOB_TIME_OUT = 2;
+    public static final Byte EXECUTOR_NOT_CONNECTED = 3;
 }
