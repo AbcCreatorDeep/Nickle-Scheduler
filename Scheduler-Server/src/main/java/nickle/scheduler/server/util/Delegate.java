@@ -81,7 +81,11 @@ public class Delegate {
         ActorContext actorContext = ThreadLocals.getActorContext();
         SqlSession sqlSession = ThreadLocals.getSqlSession();
         NickleSchedulerExecutorMapper executorMapper = sqlSession.getMapper(NickleSchedulerExecutorMapper.class);
+        NickleSchedulerRunJobMapper runJobMapper = sqlSession.getMapper(NickleSchedulerRunJobMapper.class);
         //简单任务目前采用轮询算法来保证任务高可用
+        /**
+         * @// TODO: 2019/5/12  应修改为随机散列提高性能
+         */
         for (NickleSchedulerExecutorJob executorJob : nickleSchedulerExecutorJobs) {
             //获取到执行器ip和端口
             QueryWrapper<NickleSchedulerExecutor> schedulerExecutorQueryWrapper = new QueryWrapper<>();
@@ -91,6 +95,8 @@ public class Delegate {
                 log.error("关联表有执行器，但是执行器表没有对应执行器数据");
                 continue;
             }
+            //插入正在巡行列表
+            NickleSchedulerRunJob nickleSchedulerRunJob = insertRunJob(sqlSession, nickleSchedulerExecutor.getExecutorId(), job);
             //拼接获取远程actor发送信息
             String executorDispatcherPath = String.format(AKKA_REMOTE_MODEL
                     , EXECUTOR_SYSTEM_NAME
@@ -98,8 +104,7 @@ public class Delegate {
                     , nickleSchedulerExecutor.getExecutorPort()
                     , EXECUTOR_DISPATCHER_NAME);
             ActorSelection actorSelection = actorContext.actorSelection(executorDispatcherPath);
-            ExecuteJobEvent executorStartEvent = new ExecuteJobEvent();
-            executorStartEvent.setClassName(job.getJobClassName());
+            ExecuteJobEvent executorStartEvent = new ExecuteJobEvent(job.getJobClassName(), nickleSchedulerRunJob.getId());
             log.info("开始调度简单job：{},目标主机路径：{}", job, executorDispatcherPath);
             //需确保DispacherActor真实收到任务所以采用ask模式,超时时间设置1s
             Timeout t = new Timeout(Duration.create(1, TimeUnit.SECONDS));
@@ -129,8 +134,10 @@ public class Delegate {
             }
             if (registerSuccess[0]) {
                 log.info("job:{}调度成功", job);
-                insertRunJob(sqlSession, nickleSchedulerExecutor.getExecutorId(), job);
                 return;
+            } else {
+                runJobMapper.deleteById(nickleSchedulerRunJob.getId());
+                log.info("job:{}调度失败，执行器为：{}", job, nickleSchedulerExecutor);
             }
         }
 
@@ -163,7 +170,7 @@ public class Delegate {
      * @param executorId
      * @param job
      */
-    public static void insertRunJob(SqlSession sqlSession, Integer executorId, NickleSchedulerJob job) {
+    public static NickleSchedulerRunJob insertRunJob(SqlSession sqlSession, Integer executorId, NickleSchedulerJob job) {
         //插入运行队列
         NickleSchedulerRunJobMapper runJobMapper = sqlSession.getMapper(NickleSchedulerRunJobMapper.class);
         NickleSchedulerRunJob nickleSchedulerRunJob = new NickleSchedulerRunJob();
@@ -174,6 +181,7 @@ public class Delegate {
         nickleSchedulerRunJob.setTriggerName(job.getJobTriggerName());
         nickleSchedulerRunJob.setUpdateTime(System.currentTimeMillis());
         runJobMapper.insert(nickleSchedulerRunJob);
+        return nickleSchedulerRunJob;
     }
 
     /**

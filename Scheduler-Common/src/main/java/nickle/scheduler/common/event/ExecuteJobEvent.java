@@ -1,5 +1,6 @@
 package nickle.scheduler.common.event;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -10,7 +11,9 @@ import java.io.Serializable;
  * @date 2019/5/7 18:02
  */
 @Data
-public class ExecuteJobEvent implements Serializable {
+@AllArgsConstructor
+public final class ExecuteJobEvent implements Serializable {
     private static final long serialVersionUID = 110258378672068099L;
-    private String className;
+    private final String className;
+    private final Integer jobId;
 }

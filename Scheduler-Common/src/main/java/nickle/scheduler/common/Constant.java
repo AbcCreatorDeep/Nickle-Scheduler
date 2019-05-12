@@ -18,6 +18,7 @@ public class Constant {
      */
     public static final String SCHEDULER_SYSTEM_NAME = "schedulerSystem";
     public static final String MASTER_ACTOR_NAME = "masterActor";
+    public static final String MASTER_COMPLETE_JOB_ACTOR_NAME = "completeJobActor";
     public static final String MASTER_MANAGER_ACTOR_NAME = "masterManagerActor";
     public static final String SCHEDULER_REGISTER_NAME = "schedulerRegisterActor";
     public static final String SCHEDULER_CHECKER_NAME = "schedulerCheckerActor";
@@ -40,6 +41,10 @@ public class Constant {
      * 用于Master回复心跳成功
      */
     public static final String HEARTBEAT_OK = "HEARTBEAT_OK";
+    /**
+     * 任务完成后用于回复master处理成功
+     */
+    public static final String EXECUTOR_JOB_OK = "EXECUTOR_JOB_OK";
     /**
      * ip:port 模板
      */

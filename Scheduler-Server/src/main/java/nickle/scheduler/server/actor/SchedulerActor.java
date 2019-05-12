@@ -37,9 +37,9 @@ public class SchedulerActor extends AbstractActor {
     /**
      * 默认每十秒调度一次
      */
-    private static final long SCHEDULE_TIME = 5 * 1000L;
+    private static final long SCHEDULE_TIME = 10 * 1000L;
     /**
-     * 默认每十秒调度一次
+     * 容错时间
      */
     private static final long MISTAKE_TIME = 10 * 1000L;
     /**
@@ -90,11 +90,12 @@ public class SchedulerActor extends AbstractActor {
              */
             log.info("autocommit:{}", sqlSession.getConnection().getAutoCommit());
             queryWrapper.lambda()
-                    .and(qw -> qw.le(NickleSchedulerTrigger::getTriggerNextTime, System.currentTimeMillis() + SCHEDULE_TIME)
+                    .and(qw -> qw.le(NickleSchedulerTrigger::getTriggerNextTime, System.currentTimeMillis())
                             .eq(NickleSchedulerTrigger::getTriggerStatus, STAND_BY))
                     .or(qw1 -> qw1.and(qw2 -> qw2.eq(NickleSchedulerTrigger::getTriggerStatus, ACQUIRED)
                             .le(NickleSchedulerTrigger::getTriggerUpdateTime, System.currentTimeMillis() - (SCHEDULE_TIME + MISTAKE_TIME))))
                     .orderByDesc(NickleSchedulerTrigger::getTriggerNextTime);
+            //分页取
             Page<NickleSchedulerTrigger> triggerPage = new Page<>(1, SCHEDULE_TRIGGER_NUM);
             List<NickleSchedulerTrigger> nickleSchedulerTriggers = schedulerTriggerMapper.selectPage(triggerPage, queryWrapper).getRecords();
             log.info("需要调度的触发器：{}", nickleSchedulerTriggers);
@@ -181,6 +182,7 @@ public class SchedulerActor extends AbstractActor {
 
     private void nextSchedule() {
         try {
+            //由于多个调度器，采用随机睡眠增加调度效率和准确度
             Thread.sleep(SCHEDULE_TIME);
         } catch (InterruptedException e) {
             e.printStackTrace();

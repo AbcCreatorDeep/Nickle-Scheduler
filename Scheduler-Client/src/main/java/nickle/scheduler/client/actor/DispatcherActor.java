@@ -12,7 +12,6 @@ import nickle.scheduler.client.event.ActiveJobEvent;
 import nickle.scheduler.client.event.ClientRegisterEvent;
 import nickle.scheduler.client.util.ClientUtils;
 import nickle.scheduler.common.event.ExecuteJobEvent;
-import nickle.scheduler.common.event.ExecuteResultEvent;
 import nickle.scheduler.common.event.RegisterEvent;
 import org.apache.commons.lang3.ObjectUtils;
 
@@ -35,9 +34,8 @@ public class DispatcherActor extends AbstractActor {
     private List<String> masterList;
     private boolean registerSuccess = false;
     private ActorRef executorRouter;
-    /**
-     * @// TODO: 2019/5/11 每个调度器actor需保证高可用
-     */
+    private static final int DEFAULT_EXECUTOR_NUM = Runtime.getRuntime().availableProcessors() * 2;
+
     private Router masterRouter;
 
 
@@ -47,12 +45,9 @@ public class DispatcherActor extends AbstractActor {
 
     @Override
     public void preStart() {
-        log.info("执行器分配器启动");
-        executorRouter = getContext().actorOf(Props.create(ExecutorActor.class).withRouter(new RoundRobinPool(3)),
-                "ExecutorRouter");
-        log.info("执行器分配器启动成功");
         initMasterList();
         initMasterRouter();
+        initExecutorRouter();
     }
 
     @Override
@@ -60,14 +55,26 @@ public class DispatcherActor extends AbstractActor {
         return receiveBuilder()
                 .match(ExecuteJobEvent.class, this::execExecutorStartEvent)
                 .match(ClientRegisterEvent.class, this::execRegister)
-                .match(ExecuteResultEvent.class, this::execExecutionResult)
                 .matchEquals(REGISTER_OK, this::registerReply)
                 .matchEquals(ACTIVE_JOB_EVENT, this::execFindActiveJob).build();
     }
 
+    /**
+     * 初始化master str列表
+     */
     private void initMasterList() {
         Config config = getContext().getSystem().settings().config();
         masterList = config.getStringList("remote.actor.path");
+    }
+
+    /**
+     * 初始化执行器
+     */
+    private void initExecutorRouter() {
+        log.info("执行器分配器启动");
+        executorRouter = getContext().actorOf(ExecutorActor.props(masterRouter).withRouter(new RoundRobinPool(DEFAULT_EXECUTOR_NUM)),
+                "ExecutorRouter");
+        log.info("执行器分配器启动成功");
     }
 
     /**
@@ -141,14 +148,6 @@ public class DispatcherActor extends AbstractActor {
         }
     }
 
-    /**
-     * 执行结果返回给master
-     *
-     * @param executeResultEvent
-     */
-    public void execExecutionResult(ExecuteResultEvent executeResultEvent) {
-        masterRouter.route(executeResultEvent, this.getSelf());
-    }
 
     /**
      * 接受到需调度的任务，分配到executor执行
@@ -157,6 +156,9 @@ public class DispatcherActor extends AbstractActor {
      */
     private void execExecutorStartEvent(ExecuteJobEvent executeJobEvent) {
         //返回接收成功给master
+        /**
+         * @// TODO: 2019/5/12 应实现背压，若所有执行器忙碌，则负载均衡
+         */
         getSender().tell("OK", getSelf());
         executorRouter.tell(executeJobEvent, getSelf());
     }

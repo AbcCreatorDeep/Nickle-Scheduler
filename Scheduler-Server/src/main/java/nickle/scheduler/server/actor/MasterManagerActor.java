@@ -18,7 +18,7 @@ import static nickle.scheduler.common.Constant.MASTER_MANAGER_ACTOR_NAME;
 public class MasterManagerActor extends AbstractActor {
     private ActorRef masterRouter;
     private SqlSessionFactory sqlSessionFactory;
-    public static final int DEFAULT_MASTER_NUM = 3;
+    public static final int DEFAULT_MASTER_NUM = 1;
 
     public static Props props(SqlSessionFactory sqlSessionFactory) {
         return Props.create(MasterManagerActor.class, () -> new MasterManagerActor(sqlSessionFactory));
