@@ -56,63 +56,6 @@
   <component name="DefaultGradleProjectSettings">
     <option name="isMigrated" value="true" />
   </component>
-  <component name="FUSProjectUsageTrigger">
-    <session id="224797019">
-      <usages-collector id="statistics.lifecycle.project">
-        <counts>
-          <entry key="project.closed" value="4" />
-          <entry key="project.open.time.11" value="1" />
-          <entry key="project.open.time.13" value="1" />
-          <entry key="project.open.time.15" value="1" />
-          <entry key="project.open.time.16" value="1" />
-          <entry key="project.open.time.17" value="1" />
-          <entry key="project.open.time.3" value="1" />
-          <entry key="project.open.time.8" value="1" />
-          <entry key="project.open.time.9" value="3" />
-          <entry key="project.opened" value="10" />
-        </counts>
-      </usages-collector>
-      <usages-collector id="statistics.file.extensions.open">
-        <counts>
-          <entry key="class" value="33" />
-          <entry key="conf" value="6" />
-          <entry key="java" value="212" />
-          <entry key="sql" value="5" />
-          <entry key="xml" value="6" />
-          <entry key="yml" value="7" />
-        </counts>
-      </usages-collector>
-      <usages-collector id="statistics.file.types.open">
-        <counts>
-          <entry key="CLASS" value="33" />
-          <entry key="JAVA" value="212" />
-          <entry key="PLAIN_TEXT" value="6" />
-          <entry key="SQL" value="5" />
-          <entry key="XML" value="6" />
-          <entry key="YAML" value="7" />
-        </counts>
-      </usages-collector>
-      <usages-collector id="statistics.file.extensions.edit">
-        <counts>
-          <entry key="conf" value="3" />
-          <entry key="dummy" value="28" />
-          <entry key="java" value="9935" />
-          <entry key="sql" value="63" />
-          <entry key="xml" value="2" />
-          <entry key="yml" value="131" />
-        </counts>
-      </usages-collector>
-      <usages-collector id="statistics.file.types.edit">
-        <counts>
-          <entry key="JAVA" value="9935" />
-          <entry key="PLAIN_TEXT" value="31" />
-          <entry key="SQL" value="63" />
-          <entry key="XML" value="2" />
-          <entry key="YAML" value="131" />
-        </counts>
-      </usages-collector>
-    </session>
-  </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="false">
@@ -344,10 +287,10 @@
       <select />
     </treeState>
   </component>
-  <component name="ProjectFrameBounds" extendedState="7">
-    <option name="x" value="170" />
-    <option name="y" value="15" />
-    <option name="width" value="1640" />
+  <component name="ProjectFrameBounds" extendedState="1">
+    <option name="x" value="-8" />
+    <option name="y" value="19" />
+    <option name="width" value="1826" />
     <option name="height" value="980" />
   </component>
   <component name="ProjectInspectionProfilesVisibleTreeState">
@@ -690,7 +633,7 @@
     <property name="aspect.path.notification.shown" value="true" />
     <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1557705057119" />
     <property name="jdk.selected.JAVA_MODULE" value="1.8" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/doc" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
     <property name="nodejs_package_manager_path" value="npm" />
@@ -814,12 +757,12 @@
       </method>
     </configuration>
     <list>
-      <item itemvalue="Spring Boot.Application" />
       <item itemvalue="Application.Test" />
       <item itemvalue="JUnit.ExecutorTest.testExecutor" />
       <item itemvalue="JUnit.ExecutorTest.testRegister" />
       <item itemvalue="JUnit.SpringTest.testActorSystem" />
       <item itemvalue="JUnit.SpringTest.testMapper" />
+      <item itemvalue="Spring Boot.Application" />
     </list>
     <recent_temporary>
       <list>
