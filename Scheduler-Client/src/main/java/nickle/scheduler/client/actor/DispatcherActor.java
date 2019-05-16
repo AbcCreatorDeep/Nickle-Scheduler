@@ -32,7 +32,7 @@ import static nickle.scheduler.common.Constant.*;
 public class DispatcherActor extends AbstractActor {
     private RegisterEvent registerEvent;
     private List<String> masterList;
-    private boolean registerSuccess = false;
+    private volatile boolean registerSuccess = false;
     private ActorRef executorRouter;
     private static final int DEFAULT_EXECUTOR_NUM = Runtime.getRuntime().availableProcessors() * 2;
 
@@ -111,7 +111,6 @@ public class DispatcherActor extends AbstractActor {
                 log.info("已注册成功");
                 return;
             }
-            initMasterRouter();
             ConfigObject configObject = config.getObject("akka.remote.netty.tcp");
             String hostname = configObject.get("hostname").unwrapped().toString();
             String portStr = configObject.get("port").unwrapped().toString();

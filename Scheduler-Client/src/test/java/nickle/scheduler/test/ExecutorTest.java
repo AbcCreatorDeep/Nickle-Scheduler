@@ -97,6 +97,7 @@ public class ExecutorTest {
     @Test
     public void testRegister() throws IOException {
         ActorRef actorRef = system.actorOf(DispatcherActor.props(), EXECUTOR_DISPATCHER_NAME);
+
         ClientRegisterEvent jobDetail = new ClientRegisterEvent();
         ArrayList<RegisterEvent.JobData> jobDataArrayList = Lists.newArrayList();
         ArrayList<RegisterEvent.TriggerData> triggerDataArrayList = Lists.newArrayList();
@@ -128,6 +129,7 @@ public class ExecutorTest {
         triggerDataArrayList.add(triggerData2);
         jobDetail.setJobDataList(jobDataArrayList);
         jobDetail.setTriggerDataList(triggerDataArrayList);
+
         actorRef.tell(jobDetail, actorRef);
         System.in.read();
     }

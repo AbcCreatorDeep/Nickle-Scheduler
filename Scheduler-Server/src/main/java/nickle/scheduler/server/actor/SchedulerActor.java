@@ -107,6 +107,8 @@ public class SchedulerActor extends AbstractActor {
             modifyTriggerStatus(nickleSchedulerTriggers, sqlSession);
             //添加任务
             addRunJob(nickleSchedulerTriggers);
+            //触发器不为空继续调度
+            getSelf().tell(SCHEDULE, getSelf());
         } catch (Exception e) {
             sqlSession.rollback();
             e.printStackTrace();
