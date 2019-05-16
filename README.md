@@ -28,6 +28,6 @@ QQ交流群：865810144
 ## NickleScheduler使用方式：
 客户端面向SchedulerJob接口编写即可，其他流程参考springboot
 ## NickleScheduler启动方式：  
-1、修改合适的端口和数据库配置  
+1、修改合适的端口和数据库配置并且将sql文件夹下的sql在数据库中执行    
 2、client端和server端不区分先后顺序，client端会不断重试直到连接到master   
 3、test用例有两个模式的执行任务，直接运行client、server端的Application类即可   
