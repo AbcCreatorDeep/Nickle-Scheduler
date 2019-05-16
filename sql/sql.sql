@@ -1,3 +1,7 @@
+drop DATABASE if exists nickle_scheduler;
+CREATE DATABASE nickle_scheduler;
+USE nickle_scheduler;
+
 create table nickle_scheduler_executor(
     executor_id int unsigned auto_increment primary key,
     executor_name varchar(100) not null,
