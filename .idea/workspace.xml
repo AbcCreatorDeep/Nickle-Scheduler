@@ -5,15 +5,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="eedc54f2-8fa6-4ebd-a43b-b8fa4843afd3" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/Scheduler-Server/src/main/java/nickle/scheduler/server/manager/controller/ExecutorController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Scheduler-Server/src/main/java/nickle/scheduler/server/manager/controller/pojo/vo/ExecutorVO.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Scheduler-Client/src/main/java/nickle/scheduler/client/Application.java" beforeDir="false" afterPath="$PROJECT_DIR$/Scheduler-Client/src/main/java/nickle/scheduler/client/Application.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Scheduler-Server/sql/sql.sql" beforeDir="false" afterPath="$PROJECT_DIR$/sql/sql.sql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Scheduler-Server/src/main/java/nickle/scheduler/server/Application.java" beforeDir="false" afterPath="$PROJECT_DIR$/Scheduler-Server/src/main/java/nickle/scheduler/server/Application.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Scheduler-Server/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/Scheduler-Server/src/main/resources/application.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Scheduler-Server/target/classes/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/Scheduler-Server/target/classes/application.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Scheduler-Server/target/classes/nickle/scheduler/server/Application.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Scheduler-Server/target/classes/nickle/scheduler/server/actor/SchedulerActor.class" beforeDir="false" afterPath="$PROJECT_DIR$/Scheduler-Server/target/classes/nickle/scheduler/server/actor/SchedulerActor.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Scheduler-Server/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/Scheduler-Server/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Scheduler-Server/src/main/java/nickle/scheduler/server/actor/ExecutorCheckerActor.java" beforeDir="false" afterPath="$PROJECT_DIR$/Scheduler-Server/src/main/java/nickle/scheduler/server/actor/ExecutorCheckerActor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Scheduler-Server/src/main/java/nickle/scheduler/server/actor/MasterManagerActor.java" beforeDir="false" afterPath="$PROJECT_DIR$/Scheduler-Server/src/main/java/nickle/scheduler/server/actor/MasterManagerActor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Scheduler-Server/target/classes/nickle/scheduler/server/actor/ExecutorCheckerActor.class" beforeDir="false" afterPath="$PROJECT_DIR$/Scheduler-Server/target/classes/nickle/scheduler/server/actor/ExecutorCheckerActor.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Scheduler-Server/target/classes/nickle/scheduler/server/actor/MasterManagerActor.class" beforeDir="false" afterPath="$PROJECT_DIR$/Scheduler-Server/target/classes/nickle/scheduler/server/actor/MasterManagerActor.class" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/target/" />
@@ -48,86 +47,25 @@
     <option name="isMigrated" value="true" />
   </component>
   <component name="FileEditorManager">
-    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="MybatisSqlSessionFactoryBean.java" pinned="false" current-in-tab="false">
-        <entry file="jar://$MAVEN_REPOSITORY$/com/baomidou/mybatis-plus-extension/3.1.1/mybatis-plus-extension-3.1.1-sources.jar!/com/baomidou/mybatisplus/extension/spring/MybatisSqlSessionFactoryBean.java">
+    <leaf>
+      <file leaf-file-name="AtomicInteger.java" pinned="false" current-in-tab="false">
+        <entry file="jar:///Library/Java/JavaVirtualMachines/jdk1.8.0_151.jdk/Contents/Home/src.zip!/java/util/concurrent/atomic/AtomicInteger.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="99">
-              <caret line="485" selection-start-line="485" selection-end-line="485" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="HikariDataSource.java" pinned="false" current-in-tab="false">
-        <entry file="jar://$MAVEN_REPOSITORY$/com/zaxxer/HikariCP/2.7.8/HikariCP-2.7.8-sources.jar!/com/zaxxer/hikari/HikariDataSource.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="224">
-              <caret line="115" selection-start-line="115" selection-end-line="115" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="pom.xml" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Scheduler-Server/pom.xml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-856" />
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="pom.xml" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/pom.xml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="185">
-              <caret line="60" column="24" lean-forward="true" selection-start-line="60" selection-start-column="24" selection-end-line="60" selection-end-column="24" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Application.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Scheduler-Server/src/main/java/nickle/scheduler/server/Application.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="414">
-              <caret line="35" lean-forward="true" selection-start-line="35" selection-end-line="35" />
+            <state relative-caret-position="234">
+              <caret line="157" column="29" selection-start-line="157" selection-start-column="29" selection-end-line="157" selection-end-column="29" />
               <folding>
-                <element signature="e#1062#1063#0" expanded="true" />
-                <element signature="e#1124#1125#0" expanded="true" />
+                <element signature="e#4021#4022#0" expanded="true" />
+                <element signature="e#4085#4086#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Application.java" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/Scheduler-Client/src/main/java/nickle/scheduler/client/Application.java">
+      <file leaf-file-name="Unsafe.class" pinned="false" current-in-tab="true">
+        <entry file="jar:///Library/Java/JavaVirtualMachines/jdk1.8.0_151.jdk/Contents/Home/jre/lib/rt.jar!/sun/misc/Unsafe.class">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="126">
-              <caret line="7" column="26" selection-start-line="7" selection-start-column="26" selection-end-line="7" selection-end-column="26" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="ExecutorTest.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Scheduler-Client/src/test/java/nickle/scheduler/test/ExecutorTest.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="495">
-              <caret line="64" column="58" lean-forward="true" selection-start-line="64" selection-start-column="17" selection-end-line="64" selection-end-column="58" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="PoolBase.java" pinned="false" current-in-tab="false">
-        <entry file="jar://$MAVEN_REPOSITORY$/com/zaxxer/HikariCP/2.7.8/HikariCP-2.7.8-sources.jar!/com/zaxxer/hikari/pool/PoolBase.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="199">
-              <caret line="61" selection-start-line="61" selection-end-line="61" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="AopUtils.java" pinned="false" current-in-tab="false">
-        <entry file="jar://$MAVEN_REPOSITORY$/com/baomidou/mybatis-plus-extension/3.1.1/mybatis-plus-extension-3.1.1-sources.jar!/com/baomidou/mybatisplus/extension/toolkit/AopUtils.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="124">
-              <caret line="44" selection-start-line="44" selection-end-line="44" />
+            <state relative-caret-position="207">
+              <caret line="305" column="49" selection-start-line="305" selection-start-column="32" selection-end-line="305" selection-end-column="49" />
             </state>
           </provider>
         </entry>
@@ -170,6 +108,9 @@
       <find>autoCommit</find>
       <find>但是却传来了任务完成信息</find>
       <find>reSchedulerDeathExecutorJob</find>
+      <find>连接超时,即将删除</find>
+      <find>executor_lock</find>
+      <find>LOCK_NAME</find>
     </findStrings>
     <replaceStrings>
       <replace>create table</replace>
@@ -183,8 +124,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/Scheduler-Client/src/main/java/nickle/scheduler/client/actor/ClientActor.java" />
-        <option value="$PROJECT_DIR$/Scheduler-Client/src/test/java/nickle/scheduler/test/DemoJob.java" />
         <option value="$PROJECT_DIR$/Scheduler-Server/src/main/resources/mapper/NickleSchedulerExecutorMapper.xml" />
         <option value="$PROJECT_DIR$/Scheduler-Server/src/main/java/nickle/scheduler/server/entity/NickleSchedulerExecutorJob.java" />
         <option value="$PROJECT_DIR$/Scheduler-Server/src/main/java/nickle/scheduler/server/entity/NickleSchedulerExecutor.java" />
@@ -196,7 +135,6 @@
         <option value="$PROJECT_DIR$/Scheduler-Server/src/main/java/nickle/scheduler/server/entity/NickleSchedulerFailJob.java" />
         <option value="$PROJECT_DIR$/Scheduler-Server/src/main/java/nickle/scheduler/server/util/Utils.java" />
         <option value="$PROJECT_DIR$/Scheduler-Server/src/main/java/nickle/scheduler/server/actor/CheckActor.java" />
-        <option value="$PROJECT_DIR$/Scheduler-Server/pom.xml" />
         <option value="$PROJECT_DIR$/Scheduler-Server/src/main/resources/application.conf" />
         <option value="$PROJECT_DIR$/Scheduler-Client/src/main/resources/application.conf" />
         <option value="$PROJECT_DIR$/Scheduler-Client/src/test/java/nickle/scheduler/test/DemoJob1.java" />
@@ -216,15 +154,12 @@
         <option value="$PROJECT_DIR$/Scheduler-Server/src/main/java/nickle/scheduler/server/actor/MasterActor.java" />
         <option value="$PROJECT_DIR$/Scheduler-Common/src/main/java/nickle/scheduler/common/akka/ActorFuture.java" />
         <option value="$PROJECT_DIR$/Scheduler-Server/src/main/java/nickle/scheduler/server/constant/Constant.java" />
-        <option value="$PROJECT_DIR$/Scheduler-Server/src/main/java/nickle/scheduler/server/actor/MasterManagerActor.java" />
         <option value="$PROJECT_DIR$/Scheduler-Server/src/main/java/nickle/scheduler/server/actor/RegisterActor.java" />
         <option value="$PROJECT_DIR$/Scheduler-Server/src/main/java/nickle/scheduler/server/util/ThreadLocals.java" />
-        <option value="$PROJECT_DIR$/Scheduler-Server/src/main/java/nickle/scheduler/server/actor/ExecutorCheckerActor.java" />
         <option value="$PROJECT_DIR$/Scheduler-Common/src/main/java/nickle/scheduler/common/event/ExecuteResultEvent.java" />
         <option value="$PROJECT_DIR$/Scheduler-Server/src/main/java/nickle/scheduler/server/actor/CompleteJobActor.java" />
         <option value="$PROJECT_DIR$/Scheduler-Common/src/main/java/nickle/scheduler/common/event/ExecuteJobEvent.java" />
         <option value="$PROJECT_DIR$/Scheduler-Client/src/main/java/nickle/scheduler/client/actor/ExecutorActor.java" />
-        <option value="$PROJECT_DIR$/Scheduler-Server/src/main/java/nickle/scheduler/server/util/Delegate.java" />
         <option value="$PROJECT_DIR$/Scheduler-Client/src/main/java/nickle/scheduler/client/actor/DispatcherActor.java" />
         <option value="$PROJECT_DIR$/Scheduler-Client/src/test/java/nickle/scheduler/test/ExecutorTest.java" />
         <option value="$PROJECT_DIR$/Scheduler-Server/src/main/java/nickle/scheduler/server/actor/SchedulerActor.java" />
@@ -234,6 +169,12 @@
         <option value="$PROJECT_DIR$/pom.xml" />
         <option value="$PROJECT_DIR$/Scheduler-Server/src/main/java/nickle/scheduler/server/Application.java" />
         <option value="$PROJECT_DIR$/Scheduler-Client/src/main/java/nickle/scheduler/client/Application.java" />
+        <option value="$PROJECT_DIR$/Scheduler-Server/pom.xml" />
+        <option value="$PROJECT_DIR$/Scheduler-Server/src/main/java/nickle/scheduler/server/manager/controller/pojo/vo/ExecutorVO.java" />
+        <option value="$PROJECT_DIR$/Scheduler-Server/src/main/java/nickle/scheduler/server/manager/controller/ExecutorController.java" />
+        <option value="$PROJECT_DIR$/Scheduler-Server/src/main/java/nickle/scheduler/server/actor/MasterManagerActor.java" />
+        <option value="$PROJECT_DIR$/Scheduler-Server/src/main/java/nickle/scheduler/server/actor/ExecutorCheckerActor.java" />
+        <option value="$PROJECT_DIR$/Scheduler-Server/src/main/java/nickle/scheduler/server/util/Delegate.java" />
       </list>
     </option>
   </component>
@@ -275,10 +216,10 @@
     <packageJsonPaths />
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="48" />
-    <option name="y" value="30" />
+    <option name="x" value="83" />
+    <option name="y" value="175" />
     <option name="width" value="1664" />
-    <option name="height" value="980" />
+    <option name="height" value="829" />
   </component>
   <component name="ProjectInspectionProfilesVisibleTreeState">
     <entry key="Project Default">
@@ -329,8 +270,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="PackagesPane" />
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -384,16 +323,6 @@
               <item name="Scheduler-Client" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="client" type="462c0819:PsiDirectoryNode" />
-              <item name="actor" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="Nickle-Scheduler" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Nickle-Scheduler" type="462c0819:PsiDirectoryNode" />
-              <item name="Scheduler-Client" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
               <item name="resources" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
@@ -464,6 +393,27 @@
               <item name="java" type="462c0819:PsiDirectoryNode" />
               <item name="server" type="462c0819:PsiDirectoryNode" />
               <item name="actor" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Nickle-Scheduler" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Nickle-Scheduler" type="462c0819:PsiDirectoryNode" />
+              <item name="Scheduler-Server" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="server" type="462c0819:PsiDirectoryNode" />
+              <item name="controller" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Nickle-Scheduler" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Nickle-Scheduler" type="462c0819:PsiDirectoryNode" />
+              <item name="Scheduler-Server" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="server" type="462c0819:PsiDirectoryNode" />
+              <item name="controller" type="462c0819:PsiDirectoryNode" />
+              <item name="vo" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="Nickle-Scheduler" type="b2602c69:ProjectViewProjectNode" />
@@ -507,6 +457,8 @@
         </subPane>
       </pane>
       <pane id="AndroidView" />
+      <pane id="Scope" />
+      <pane id="PackagesPane" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -564,7 +516,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Application.Application">
+  <component name="RunManager" selected="Spring Boot.Application">
     <configuration name="Application" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="nickle.scheduler.client.Application" />
       <module name="Scheduler-Client" />
@@ -711,7 +663,9 @@
       <workItem from="1557650314880" duration="6863000" />
       <workItem from="1557667527125" duration="450000" />
       <workItem from="1557669281850" duration="5651000" />
-      <workItem from="1557994861568" duration="5335000" />
+      <workItem from="1557994861568" duration="5672000" />
+      <workItem from="1558061687390" duration="4618000" />
+      <workItem from="1558082805989" duration="1137000" />
     </task>
     <servers />
   </component>
@@ -748,39 +702,42 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="127336000" />
+    <option name="totallyTimeSpent" value="133428000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="48" y="30" width="1664" height="980" extended-state="0" />
+    <frame x="83" y="175" width="1664" height="829" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info anchor="right" id="Palette" order="3" />
-      <window_info anchor="bottom" id="TODO" order="7" />
-      <window_info anchor="bottom" id="Messages" order="13" sideWeight="0.49932975" weight="0.3255814" />
-      <window_info anchor="right" id="Palette&#9;" order="7" />
-      <window_info id="Image Layers" order="2" />
-      <window_info anchor="right" id="Capture Analysis" order="6" />
       <window_info anchor="bottom" id="Event Log" order="12" sideWeight="0.5013405" side_tool="true" weight="0.63404256" />
       <window_info anchor="right" id="Maven Projects" order="9" weight="0.3297587" />
       <window_info anchor="bottom" id="Database Changes" order="10" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Run" order="3" sideWeight="0.49865952" weight="0.9209302" />
-      <window_info anchor="bottom" id="Version Control" order="9" weight="0.9457701" />
-      <window_info anchor="bottom" id="Spring" order="0" weight="0.32624114" />
-      <window_info anchor="bottom" id="Terminal" order="11" weight="0.3267442" />
       <window_info id="Capture Tool" order="5" />
       <window_info id="Designer" order="3" />
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.3212084" />
       <window_info anchor="right" id="Database" order="8" weight="0.32952693" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info id="UI Designer" order="4" />
+      <window_info anchor="bottom" id="Debug" order="4" weight="0.27221438" />
+      <window_info anchor="bottom" id="TODO" order="7" />
+      <window_info anchor="right" id="Palette&#9;" order="7" />
+      <window_info id="Image Layers" order="2" />
+      <window_info anchor="bottom" id="Java Enterprise" order="14" />
+      <window_info anchor="right" id="Capture Analysis" order="6" />
+      <window_info anchor="bottom" id="Version Control" order="9" weight="0.9457701" />
+      <window_info anchor="bottom" id="Run" order="3" sideWeight="0.49865952" weight="0.48519042" />
+      <window_info anchor="bottom" id="Spring" order="0" weight="0.32624114" />
+      <window_info anchor="bottom" id="Terminal" order="11" weight="0.3267442" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.32860667" />
+      <window_info anchor="right" id="Bean Validation" order="10" />
+      <window_info id="Web" order="6" side_tool="true" />
       <window_info anchor="right" id="Theme Preview" order="4" />
-      <window_info anchor="bottom" id="Debug" order="4" weight="0.3883721" />
       <window_info id="Favorites" order="6" side_tool="true" />
       <window_info anchor="bottom" id="Inspection" order="6" weight="0.4" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="bottom" id="Docker" order="8" show_stripe_button="false" />
       <window_info anchor="bottom" id="Cvs" order="5" weight="0.25" />
+      <window_info anchor="bottom" id="Messages" order="13" sideWeight="0.49932975" weight="0.32440057" />
       <window_info anchor="bottom" id="Message" order="1" />
       <window_info anchor="right" id="Maven" order="5" weight="0.21480939" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.30563003" />
@@ -790,10 +747,9 @@
       <window_info anchor="right" id="Maven" order="5" weight="0.21480939" />
       <window_info id="Designer" order="3" />
       <window_info anchor="right" id="Palette" order="3" />
-      <window_info anchor="bottom" id="Run" order="3" sideWeight="0.49946696" weight="0.6822695" />
       <window_info anchor="bottom" id="Spring" order="0" weight="0.32624114" />
       <window_info id="Image Layers" order="2" />
-      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
+      <window_info anchor="bottom" id="Run" order="3" sideWeight="0.49946696" weight="0.6822695" />
       <window_info anchor="bottom" id="Cvs" order="5" weight="0.25" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info id="Capture Tool" order="5" />
@@ -802,6 +758,7 @@
       <window_info anchor="bottom" id="Terminal" order="11" weight="0.32765958" />
       <window_info anchor="bottom" id="Docker" order="8" show_stripe_button="false" />
       <window_info anchor="right" id="Capture Analysis" order="6" />
+      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="bottom" id="Event Log" order="12" sideWeight="0.50053304" side_tool="true" weight="0.7581345" />
       <window_info anchor="bottom" id="Messages" order="13" weight="0.32624114" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.30563003" />
@@ -865,48 +822,29 @@
           <properties />
           <option name="timeStamp" value="20" />
         </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/Scheduler-Server/src/main/java/nickle/scheduler/server/actor/ExecutorCheckerActor.java</url>
+          <line>79</line>
+          <properties />
+          <option name="timeStamp" value="5" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/Scheduler-Server/src/main/java/nickle/scheduler/server/util/Delegate.java</url>
+          <line>157</line>
+          <properties />
+          <option name="timeStamp" value="6" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/Scheduler-Server/src/main/java/nickle/scheduler/server/util/Delegate.java</url>
+          <line>183</line>
+          <properties />
+          <option name="timeStamp" value="7" />
+        </line-breakpoint>
       </breakpoints>
-      <option name="time" value="3" />
+      <option name="time" value="8" />
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="jar://C:/Program Files/Java/jdk1.8.0_131/src.zip!/java/util/concurrent/Executors.java" />
-    <entry file="file://$PROJECT_DIR$/Scheduler-Common/pom.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="599">
-          <caret line="31" column="21" selection-start-line="31" selection-start-column="21" selection-end-line="31" selection-end-column="21" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://C:/Program Files/Java/jdk1.8.0_131/src.zip!/java/lang/Object.java" />
-    <entry file="file://$PROJECT_DIR$/Scheduler-Client/pom.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="207">
-          <caret line="49" column="2" selection-start-line="49" selection-start-column="2" selection-end-line="56" selection-end-column="21" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Scheduler-Server/src/main/java/nickle/scheduler/server/entity/NickleSchedulerSuccessJob.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-26">
-          <caret line="20" column="13" selection-start-line="20" selection-start-column="13" selection-end-line="20" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Scheduler-Server/src/main/java/nickle/scheduler/server/entity/NickleSchedulerRunJob.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="58">
-          <caret line="20" column="13" selection-start-line="20" selection-start-column="13" selection-end-line="20" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Scheduler-Server/src/main/java/nickle/scheduler/server/mapper/NickleSchedulerRunJobMapper.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="336">
-          <caret line="13" column="71" selection-start-line="13" selection-start-column="71" selection-end-line="13" selection-end-column="71" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Scheduler-Server/src/main/java/nickle/scheduler/server/mapper/NickleSchedulerSuccessJobMapper.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="336">
@@ -989,24 +927,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Scheduler-Server/src/main/java/nickle/scheduler/server/util/Delegate.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="74">
-          <caret line="181" column="13" lean-forward="true" selection-start-line="181" selection-start-column="13" selection-end-line="181" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Scheduler-Server/src/main/java/nickle/scheduler/server/actor/RegisterActor.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="46">
           <caret line="142" column="69" lean-forward="true" selection-start-line="142" selection-start-column="69" selection-end-line="142" selection-end-column="69" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Scheduler-Server/src/main/java/nickle/scheduler/server/actor/MasterManagerActor.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="468">
-          <caret line="35" column="52" selection-start-line="35" selection-start-column="52" selection-end-line="35" selection-end-column="52" />
         </state>
       </provider>
     </entry>
@@ -1028,9 +952,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="307">
           <caret line="74" column="54" selection-start-line="74" selection-start-column="54" selection-end-line="74" selection-end-column="54" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1045,13 +966,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="392">
           <caret line="46" column="30" selection-start-line="46" selection-start-column="12" selection-end-line="46" selection-end-column="30" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Scheduler-Server/src/main/java/nickle/scheduler/server/actor/ExecutorCheckerActor.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="271">
-          <caret line="32" column="45" selection-start-line="32" selection-start-column="43" selection-end-line="32" selection-end-column="45" />
         </state>
       </provider>
     </entry>
@@ -1114,23 +1028,16 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Scheduler-Server/src/main/resources/application.yml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="191">
-          <caret line="15" column="21" selection-start-line="15" selection-start-column="21" selection-end-line="15" selection-end-column="21" />
-        </state>
-      </provider>
-    </entry>
     <entry file="jar://$MAVEN_REPOSITORY$/com/baomidou/mybatis-plus-extension/3.1.1/mybatis-plus-extension-3.1.1-sources.jar!/com/baomidou/mybatisplus/extension/toolkit/AopUtils.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="124">
+        <state relative-caret-position="432">
           <caret line="44" selection-start-line="44" selection-end-line="44" />
         </state>
       </provider>
     </entry>
     <entry file="jar://$MAVEN_REPOSITORY$/com/zaxxer/HikariCP/2.7.8/HikariCP-2.7.8-sources.jar!/com/zaxxer/hikari/pool/PoolBase.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="199">
+        <state relative-caret-position="288">
           <caret line="61" selection-start-line="61" selection-end-line="61" />
         </state>
       </provider>
@@ -1144,52 +1051,131 @@
     </entry>
     <entry file="jar://$MAVEN_REPOSITORY$/com/zaxxer/HikariCP/2.7.8/HikariCP-2.7.8-sources.jar!/com/zaxxer/hikari/HikariDataSource.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="224">
+        <state relative-caret-position="1566">
           <caret line="115" selection-start-line="115" selection-end-line="115" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Scheduler-Server/pom.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-856" />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/pom.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="185">
-          <caret line="60" column="24" lean-forward="true" selection-start-line="60" selection-start-column="24" selection-end-line="60" selection-end-column="24" />
+        <state relative-caret-position="1080">
+          <caret line="60" column="24" selection-start-line="60" selection-start-column="24" selection-end-line="60" selection-end-column="24" />
         </state>
       </provider>
     </entry>
     <entry file="jar://$MAVEN_REPOSITORY$/com/baomidou/mybatis-plus-extension/3.1.1/mybatis-plus-extension-3.1.1-sources.jar!/com/baomidou/mybatisplus/extension/spring/MybatisSqlSessionFactoryBean.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="99">
+        <state relative-caret-position="6660">
           <caret line="485" selection-start-line="485" selection-end-line="485" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Scheduler-Server/src/main/java/nickle/scheduler/server/Application.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="414">
-          <caret line="35" lean-forward="true" selection-start-line="35" selection-end-line="35" />
-          <folding>
-            <element signature="e#1062#1063#0" expanded="true" />
-            <element signature="e#1124#1125#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Scheduler-Client/src/test/java/nickle/scheduler/test/ExecutorTest.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="495">
-          <caret line="64" column="58" lean-forward="true" selection-start-line="64" selection-start-column="17" selection-end-line="64" selection-end-column="58" />
+        <state relative-caret-position="612">
+          <caret line="64" column="58" selection-start-line="64" selection-start-column="17" selection-end-line="64" selection-end-column="58" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Scheduler-Client/src/main/java/nickle/scheduler/client/Application.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="126">
-          <caret line="7" column="26" selection-start-line="7" selection-start-column="26" selection-end-line="7" selection-end-column="26" />
+        <state relative-caret-position="180">
+          <caret line="10" lean-forward="true" selection-start-line="10" selection-end-line="10" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Scheduler-Server/src/main/java/nickle/scheduler/server/service/INickleSchedulerExecutorJobService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="216">
+          <caret line="13" column="17" selection-start-line="13" selection-start-column="17" selection-end-line="13" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Scheduler-Server/src/main/java/nickle/scheduler/server/entity/NickleSchedulerExecutor.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="248">
+          <caret line="21" column="13" selection-start-line="21" selection-start-column="13" selection-end-line="21" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Scheduler-Server/src/main/resources/application.yml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="450">
+          <caret line="25" lean-forward="true" selection-start-line="25" selection-end-line="25" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Scheduler-Server/src/main/java/nickle/scheduler/server/Generator.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="198">
+          <caret line="20" column="13" selection-start-line="20" selection-start-column="13" selection-end-line="20" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Scheduler-Server/src/main/java/nickle/scheduler/server/Application.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="108">
+          <caret line="18" column="2" lean-forward="true" selection-start-line="18" selection-start-column="2" selection-end-line="18" selection-end-column="2" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Scheduler-Server/pom.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="275">
+          <caret line="41" column="47" selection-start-line="41" selection-start-column="47" selection-end-line="41" selection-end-column="47" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Scheduler-Server/src/main/java/nickle/scheduler/server/manager/controller/pojo/vo/ExecutorVO.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="108">
+          <caret line="6" column="23" selection-start-line="6" selection-start-column="13" selection-end-line="6" selection-end-column="23" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Scheduler-Server/src/main/java/nickle/scheduler/server/manager/controller/ExecutorController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="18">
+          <caret line="16" column="27" lean-forward="true" selection-start-line="16" selection-start-column="27" selection-end-line="16" selection-end-column="27" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Scheduler-Server/src/main/java/nickle/scheduler/server/actor/MasterManagerActor.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="162">
+          <caret line="20" column="50" selection-start-line="20" selection-start-column="50" selection-end-line="20" selection-end-column="50" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Scheduler-Server/src/main/java/nickle/scheduler/server/actor/ExecutorCheckerActor.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="388">
+          <caret line="89" column="66" selection-start-line="89" selection-start-column="66" selection-end-line="89" selection-end-column="66" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Scheduler-Server/src/main/java/nickle/scheduler/server/util/Delegate.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="281">
+          <caret line="159" column="28" selection-start-line="159" selection-start-column="28" selection-end-line="159" selection-end-column="28" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar:///Library/Java/JavaVirtualMachines/jdk1.8.0_151.jdk/Contents/Home/src.zip!/java/util/concurrent/atomic/AtomicInteger.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="234">
+          <caret line="157" column="29" selection-start-line="157" selection-start-column="29" selection-end-line="157" selection-end-column="29" />
+          <folding>
+            <element signature="e#4021#4022#0" expanded="true" />
+            <element signature="e#4085#4086#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar:///Library/Java/JavaVirtualMachines/jdk1.8.0_151.jdk/Contents/Home/jre/lib/rt.jar!/sun/misc/Unsafe.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="207">
+          <caret line="305" column="49" selection-start-line="305" selection-start-column="32" selection-end-line="305" selection-end-column="49" />
         </state>
       </provider>
     </entry>

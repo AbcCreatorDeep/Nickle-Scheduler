@@ -81,17 +81,20 @@ public class ExecutorCheckerActor extends AbstractActor {
             QueryWrapper<NickleSchedulerExecutor> executorQueryWrapper = new QueryWrapper<>();
             executorQueryWrapper.lambda().le(NickleSchedulerExecutor::getUpdateTime, System.currentTimeMillis() - EXECUTOR_HEART_BEAT_INTERVAL);
             List<NickleSchedulerExecutor> schedulerExecutors = executorMapper.selectList(executorQueryWrapper);
-            if (ObjectUtils.isEmpty(schedulerExecutors)) {
-                nextCheck();
+            if (!ObjectUtils.isEmpty(schedulerExecutors)) {
+                log.info("删除过期主机:{}", schedulerExecutors);
+                Delegate.deleteExecutor(sqlSession, schedulerExecutors.toArray(new NickleSchedulerExecutor[]{}));
+                //这里需要一个新的sqlsession保证不死锁
+                sqlSession.commit();
+                sqlSession.close();
+                sqlSession = sqlSessionFactory.openSession(false);
+                //删除主机关联的job并重调度该执行器下的job
+                for (NickleSchedulerExecutor schedulerExecutor : schedulerExecutors) {
+                    //重调度
+                    reSchedulerDeathExecutorJob(schedulerExecutor.getExecutorId(), sqlSession);
+                }
+            } else {
                 log.info("结束检测无心跳主机,无过期主机");
-                return;
-            }
-            log.info("删除过期主机:{}", schedulerExecutors);
-            Delegate.deleteExecutor(sqlSession, schedulerExecutors.toArray(new NickleSchedulerExecutor[]{}));
-            //删除主机关联的job并重调度该执行器下的job
-            for (NickleSchedulerExecutor schedulerExecutor : schedulerExecutors) {
-                //重调度
-                reSchedulerDeathExecutorJob(schedulerExecutor.getExecutorId(), sqlSession);
             }
             sqlSession.commit();
         } catch (Exception e) {
