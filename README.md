@@ -20,7 +20,7 @@
   3、真诚邀请志同道合的朋友加入贡献者一起完善整个调度器功能，相信在开源的力量下，本框架会变得越来越好，akka本身就是高性能全异步处理框架，十分适合用来做分布式调度，希望各位踊跃参与开发！！！  
 ## 作者联系方式：  
 微信：18510746130  
-QQ交流群：865810144
+QQ交流群：250431014
 ## NickleScheduler架构图：  
 ![image](https://github.com/NickleHuang/Nickle-Scheduler/blob/master/doc/NickleScheduler架构图.jpg)  
 ## NickleScheduler流程图：  
